@@ -2,9 +2,6 @@
 
 These are my personal configuration files for building a productive and beautiful shell environment. The setup is managed using a bare Git repository technique.
 
-![](https://user-images.githubusercontent.com/penzulo/repo/branch/screenshot.png)
-*(A screenshot of your prompt is a great addition here!)*
-
 ---
 
 ### ## Contents
@@ -12,7 +9,6 @@ These are my personal configuration files for building a productive and beautifu
 This repository currently manages configurations for:
 * **Shell:** [Nushell](https://www.nushell.sh/)
 * **Prompt:** [Starship](https://starship.rs/)
-* **Editor:** [Neovim](https://neovim.io/) *(Add this when you add your nvim config)*
 * ...and more to come!
 
 ---
@@ -45,7 +41,7 @@ To set this up on a new machine, follow these steps:
 
 4.  **Set the `showUntrackedFiles` flag:**
     Configure the local repository to hide untracked files in its status.
-    ```sh
+    ```nu
     dotgit config --local status.showUntrackedFiles no
     ```
 
