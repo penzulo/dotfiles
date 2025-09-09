@@ -1,5 +1,5 @@
 # -- Dotfiles --
-alias dotgit = git --git-dir $"($env.USERPROFILE)\\.dotfiles" --work-tree $env.USERPROFILE
+alias dotgit = git --git-dir $"($env.HOME)/.dotfiles" --work-tree $env.HOME
 
 # -- Listing files (if you have eza installed, otherwise use ls) --
 alias ls = eza --icons
