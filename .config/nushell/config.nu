@@ -10,6 +10,7 @@
 # |         Core Config          |
 # ================================
 # Set Nushell's internal behavior.
+use std/util "path add"
 $env.config = {
     buffer_editor: "nvim"
     show_banner: false
@@ -28,6 +29,13 @@ $env.config = {
         algorithm: "fuzzy"
     }
 }
+
+# ================================
+# |     Path Manipulation        |
+# ================================
+path add $"($nu.home-path)/.bun/bin"
+path add $"($nu.home-path)/.cargo/bin"
+path add $"($nu.home-path)/.local/bin"
 
 
 # ================================
