@@ -15,3 +15,6 @@ alias gc = git commit -m
 alias gs = git status
 alias gp = git push
 alias gl = git pull
+
+# -- Helix --
+alias hx = helix

@@ -1,0 +1,19 @@
+theme = "gruvbox"
+
+[editor]
+line-number = "relative"
+cursorline = true
+mouse = true
+
+[editor.lsp]
+display-messages = true
+display-inlay-hints = true
+
+[editor.statusline]
+left = ["mode", "spinner"]
+center = ["file-name"]
+right = ["diagnostics", "selections", "position", "file-encoding", "file-line-ending"]
+
+[editor.indent-guides]
+render = true
+character = "."

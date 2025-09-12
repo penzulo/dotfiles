@@ -21,8 +21,8 @@ font_params = {
 }
 
 layout_theme = {
-    "border_width": 2,
+    "border_width": 1,
     "margin": 0,
-    "border_focus": colors["background"],
+    "border_focus": colors["purple"],
     "border_normal": colors["background"],
 }

@@ -10,43 +10,45 @@ from settings.schemas import GroupProperties
 # Note: Using Nerd Font icons for labels is a common practice for a clean look.
 # Make sure you have a Nerd Font installed and configured in your theme.py.
 group_props: list[GroupProperties] = [
-    {"name": "DEV", "key": "1", "label": "󰆍", "layout": "monadtall", "matches": []},
+    {
+        "name": "DEV",
+        "key": "1",
+        "label": "󰆍",
+        "layout": "monadtall",
+        "matches": [Match(wm_class="helix")],
+    },
     {
         "name": "WWW",
         "key": "2",
-        "label": "󰖟",
+        "label": "",
         "layout": "monadtall",
         "matches": [Match(wm_class="firefox"), Match(wm_class="firefox")],
     },
     {
         "name": "SYS",
         "key": "3",
-        "label": "System",
+        "label": "",
         "layout": "monadtall",
-        "matches": [Match(wm_class="thunar")],
+        "matches": [
+            Match(wm_class="thunar"),
+            Match(wm_class="yazi"),
+            Match(wm_class="btop"),
+        ],
     },
     {"name": "DOC", "key": "4", "label": "󰈙", "layout": "monadtall", "matches": []},
     {
-        "name": "VBOX",
-        "key": "5",
-        "label": "Virtualization ",
-        "layout": "monadtall",
-        "matches": [],
-    },
-    {
         "name": "MUS",
-        "key": "6",
-        "label": "Music",
+        "key": "5",
+        "label": "",
         "layout": "monadtall",
         "matches": [Match(wm_class="ncmpcpp")],
     },
-    {"name": "VID", "key": "8", "label": "Video", "layout": "monadtall", "matches": []},
     {
-        "name": "GFX",
-        "key": "7",
-        "label": "Graphics",
-        "layout": "floating",
-        "matches": [Match(wm_class="gimp"), Match(wm_class="inkscape")],
+        "name": "VID",
+        "key": "6",
+        "label": "",
+        "layout": "monadtall",
+        "matches": [Match(wm_class="vlc"), Match(wm_class="mpv")],
     },
 ]
 

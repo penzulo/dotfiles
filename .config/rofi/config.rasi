@@ -1,0 +1,14 @@
+configuration {
+    modi:            "drun";
+    font:            "JetBrainsMono Nerd Font 12";
+    show-icons:      true;
+    icon-theme:      "Papirus-Dark";
+    terminal:        "kitty";
+    drun-display-format: "{name}";
+    lines: 5;
+    sort: true;
+    sorting-method: "fzf";
+}
+
+/* Load the theme file */
+@theme "themes/gruvbox-dark.rasi"
