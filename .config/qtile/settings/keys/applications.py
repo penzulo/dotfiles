@@ -41,8 +41,8 @@ keys: list[Key] = [
     Key(
         [mod],
         "p",
-        lazy.spawn("flatpak run org.keepassxc.KeePassXC"),
-        desc="Launch KeePassXC password manager",
+        lazy.spawn("rofi-pass"),
+        desc="Launch password manager",
     ),
     Key(
         [mod],
