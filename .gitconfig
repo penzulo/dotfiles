@@ -1,0 +1,42 @@
+[user]
+    name = penzulo
+    email = bhardesh2005@gmail.com
+	signingKey = 18055DDD2480CA49
+
+[core]
+    editor = helix
+	excludesFile = ~/.gitignore_glob
+
+[init]
+    defaultBranch = main
+
+[pull]
+    rebase = true
+
+[rebase]
+    autoStash = true
+
+[diff]
+    algorithm = patience
+
+[commit]
+	gpgsign = true
+    template = ~/.gitmessage
+
+[alias]
+    s = status -s
+    co = checkout
+    br = branch
+    ci = commit
+    last = log -1 HEAD
+    unstage = reset HEAD --
+    lg = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)'
+    pushf = push --force-with-lease
+    aliases = config --get-regexp ^alias\\.
+
+[rerere]
+    enabled = true
+
+# Include your work-specific config only for projects in your work directory
+[includeIf "gitdir:~/Workspace/"]
+    path = ~/.gitconfig-work[core]

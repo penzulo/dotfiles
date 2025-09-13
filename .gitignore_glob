@@ -1,0 +1,19 @@
+# --- Secrets ---
+.env
+*.env
+.env.*
+!/.env.example
+
+# --- Private Keys ---
+*.pem
+*.key
+
+# --- macOS ---
+.DS_Store
+
+# --- Linux ---
+*~
+
+# --- Vim ---
+*.swp
+*.swo
