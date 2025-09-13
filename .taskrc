@@ -1,0 +1,17 @@
+# [Created by task 3.4.1 9/14/2025 02:40:47]
+data.location=/home/penzulo/.task
+news.version=3.4.1
+
+# [General Settings]
+confirmation=yes
+verbose=on
+default.command=next
+include dark-256.theme
+
+# --- Custom Report: 'next' ---
+# This report shows the most urgent tasks sorted by urgency.
+report.next.columns=id,project,tags,due,urgency,description
+report.next.labels=ID,Project,Tags,Due,Urg,Description
+report.next.filter=status:pending limit:15
+report.next.sort=urgency-
+
