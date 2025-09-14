@@ -13,6 +13,7 @@ for path in "${custom_paths[@]}"; do
 done
 
 export PATH
+export LEDGER_FILE=~/Documents/Ledger/main.journal
 
 # --- Aliases ---
 alias ..='cd ..'
