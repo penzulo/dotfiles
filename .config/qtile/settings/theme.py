@@ -1,5 +1,5 @@
 # Gruvbox Dark color scheme
-colors = {
+colors: dict[str, str] = {
     "background": "#282828",
     "foreground": "#ebdbb2",
     "black": "#282828",
@@ -15,12 +15,12 @@ colors = {
 }
 
 # Font settings
-font_params = {
+font_params: dict[str, str] = {
     "font": "JetBrainsMono Nerd Font",
     "fontsize": 14,
 }
 
-layout_theme = {
+layout_theme: dict[str, str] = {
     "border_width": 1,
     "margin": 0,
     "border_focus": colors["purple"],

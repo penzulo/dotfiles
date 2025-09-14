@@ -1,0 +1,6 @@
+show_week_numbers = 1
+mark_today = 1
+show_border = 0
+close_on_unfocus = 1
+close_on_mouseleave = 1
+mainwindow_decorated = 1

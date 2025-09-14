@@ -5,7 +5,7 @@ from libqtile.lazy import lazy
 
 from .system import mod
 
-terminal: Literal["alacritty"] = "alacritty"
+terminal: str = "alacritty"
 
 keys: list[Key] = [
     # ============================
