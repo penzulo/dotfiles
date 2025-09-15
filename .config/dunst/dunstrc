@@ -1,0 +1,57 @@
+[global]
+    font = JetBrainsMono Nerd Font 11
+    allow_markup = yes
+    format = "<b>%s</b>\n%b"
+    sort = yes
+    indicate_hidden = yes
+    show_indicators = no
+    word_wrap = yes
+    ignore_newline = no
+
+    # Position & layout
+    monitor = 0
+    follow = mouse
+    origin = top-right
+    alignment = left
+    offset = 20x40
+    padding = 16
+    horizontal_padding = 20
+    frame_width = 2
+    frame_color = "#d79921"
+    separator_height = 2
+    separator_color = frame
+    gap_size = 10
+    corner_radius = 10
+
+    # Timeouts
+    idle_threshold = 0
+    sticky_history = yes
+    history_length = 20
+    show_age_threshold = 60
+    message_timeout = 6
+
+    # Icons
+    icon_position = left
+    min_icon_size = 32
+    max_icon_size = 48
+    scale = 0
+
+    # Transparency (requires a compositor like picom)
+    transparency = 10
+
+[urgency_low]
+    background = "#282828"
+    foreground = "#ebdbb2"
+    timeout = 5
+
+[urgency_normal]
+    background = "#282828"
+    foreground = "#ebdbb2"
+    frame_color = "#d79921"
+    timeout = 6
+
+[urgency_critical]
+    background = "#282828"
+    foreground = "#ebdbb2"
+    frame_color = "#cc241d"
+    timeout = 0
