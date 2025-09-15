@@ -1,0 +1,54 @@
+# Gruvbox Dark themed Betterlockscreen
+
+# --- Display options ---
+display_on=0
+span_image=false
+lock_timeout=300
+
+# --- Effects ---
+fx_list=(dimblur blur dim color)    # Order of preferred effects
+dim_level=20                        # Dim overlay percentage
+blur_level=8                        # Gaussian blur radius
+pixel_scale=10,1000                 # Pixelate scale (unused unless using pixel effect)
+solid_color=282828                  # Fallback solid background (Gruvbox dark)
+
+# --- Wallpaper ---
+wallpaper_cmd="feh --bg-fill"
+quiet=false
+
+# --- Login box ---
+loginbox=282828AA                    # Semi-transparent background
+loginshadow=00000000                 # Shadow under box
+locktext="Type password to unlock..."
+font="JetBrainsMono Nerd Font 18"
+
+# --- Ring colors (input circle) ---
+ringcolor=458588ff                   # outer ring (blue)
+insidecolor=282828AA                 # inner circle semi-transparent
+separatorcolor=928374ff              # line separator
+ringvercolor=d79921ff                # verification success (yellow)
+insidevercolor=282828AA              # inner ring on success
+ringwrongcolor=cc241dff              # wrong password ring (red)
+insidewrongcolor=cc241d55            # wrong password inner (semi-transparent red)
+
+# --- Time/Date ---
+timecolor=d79921ff                   # yellow
+time_format="%H:%M:%S"
+
+# --- Greeter & layout colors ---
+greetercolor=ebdbb2ff                # foreground color
+layoutcolor=ebdbb2ff
+
+# --- Keyboard highlight ---
+keyhlcolor=d79921ff                  # keys being typed
+bshlcolor=d79921ff                   # backspace highlight
+modifcolor=d79921ff
+
+# --- Verification/Wrong messages ---
+veriftext="Verifying..."
+verifcolor=ebdbb2ff
+wrongtext="Failure!"
+wrongcolor=cc241dff
+
+# --- Background ---
+bgcolor=282828ff                     # solid fallback background
