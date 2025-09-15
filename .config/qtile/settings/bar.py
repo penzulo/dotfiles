@@ -1,11 +1,12 @@
+import os
 import subprocess
 
 from libqtile import bar, widget
 from libqtile.config import Screen
 from libqtile.lazy import lazy
 
-from .theme import colors
 from settings.keys.applications import terminal
+from settings.theme import colors, powerline
 
 
 def create_bar() -> bar.Bar:
@@ -15,26 +16,66 @@ def create_bar() -> bar.Bar:
             widget.GroupBox(
                 active=colors["foreground"],
                 inactive=colors["gray"],
-                highlight_method="block",
-                this_current_screen_border=colors["purple"],
-                block_highlight_text_color=colors["background"],
+                highlight_method="text",
+                this_current_screen_border=colors["background-alt"],
+                block_highlight_text_color=colors["foreground"],
                 padding_x=10,
                 hide_unused=True,
+                background=colors["purple"],
+            ),
+            widget.TextBox(
+                "",
+                foreground=colors["purple"],
+                **powerline,
             ),
             widget.Spacer(),
+            widget.TextBox(
+                "",
+                foreground=colors["background"],
+                **powerline,
+            ),
             widget.Clock(
-                format="%B %d %H:%M",
-                foreground=colors["orange"],
+                format="󰥔 %B %d %H:%M",
+                background=colors["background"],
                 mouse_callbacks={"Button1": lazy.spawn("gsimplecal")},
             ),
-            widget.Spacer(),
+            widget.TextBox(
+                "",
+                foreground=colors["purple"],
+                background=colors["background"],
+                **powerline,
+            ),
+            widget.CheckUpdates(
+                distr="Arch",
+                display_format="󰏔 {updates}",
+                no_update_string="󰏔 0",
+                background=colors["purple"],
+                colour_have_updates=colors["foreground"],
+                colour_no_updates=colors["foreground"],
+            ),
+            widget.TextBox(
+                "", foreground=colors["blue"], background=colors["purple"], **powerline
+            ),
+            widget.Volume(
+                fmt="󰕾 {}",
+                background=colors["blue"],
+                get_volume_command=os.path.expanduser(
+                    path="~/.config/qtile/scripts/volume.sh"
+                ),
+            ),
+            widget.TextBox(
+                "", foreground=colors["aqua"], background=colors["blue"], **powerline
+            ),
             widget.Wlan(
                 interface="wlan0",
-                format="󰤨",
+                format="󰤨  {essid}",
                 disconnected_message="󰖪",
-                foreground=colors["aqua"],
+                background=colors["aqua"],
                 padding=15,
                 mouse_callbacks={"Button1": lazy.spawn("networkmanager_dmenu")},
+            ),
+            widget.TextBox(
+                "", foreground=colors["green"], background=colors["aqua"], **powerline
             ),
             widget.Battery(
                 charge_char="󰂄",
@@ -47,6 +88,7 @@ def create_bar() -> bar.Bar:
                 update_interval=10,
                 notify_below=20,
                 show_short_text=False,
+                background=colors["green"],
                 low_foreground=colors["red"],
                 low_percentage=0.20,
                 format="{char} {percent:2.0%}",
@@ -54,11 +96,15 @@ def create_bar() -> bar.Bar:
                     "Button1": lazy.spawn(f"{terminal} --class btop -e btop")
                 },
             ),
-            widget.Systray(icon_size=15, padding=8),
+            widget.TextBox(
+                "",
+                foreground=colors["orange"],
+                background=colors["green"],
+                **powerline,
+            ),
+            widget.Systray(background=colors["orange"], icon_size=20, padding=10),
         ],
         26,
-        background=colors["background"],
-        opacity=0.85,
     )
 
 
@@ -66,7 +112,6 @@ def create_bar() -> bar.Bar:
 # Use xrandr to get the number of connected monitors
 command: str = "xrandr --query | rg ' connected' | wc -l"
 try:
-    # Execute the command in a shell
     num_monitors_str: str = (
         subprocess.check_output(args=command, shell=True).decode().strip()
     )

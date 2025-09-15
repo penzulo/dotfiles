@@ -19,7 +19,7 @@ keys: list[Key] = [
     Key(
         [mod],
         "x",
-        lazy.spawn('sh -c "~/.config/qtile/settings/rofi/powermenu.sh"'),
+        lazy.spawn('sh -c "~/.config/qtile/scripts/powermenu.sh"'),
         desc="Show power menu",
     ),
     # --- Audio ---

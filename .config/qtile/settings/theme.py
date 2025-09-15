@@ -1,6 +1,7 @@
 # Gruvbox Dark color scheme
 colors: dict[str, str] = {
     "background": "#282828",
+    "background-alt": "#3c3836",
     "foreground": "#ebdbb2",
     "black": "#282828",
     "gray": "#928374",
@@ -26,3 +27,5 @@ layout_theme: dict[str, str] = {
     "border_focus": colors["purple"],
     "border_normal": colors["background"],
 }
+
+powerline: dict[str, str] = {"fontsize": 26, "padding": 0}

@@ -1,8 +1,8 @@
 import os
 import subprocess
+from typing import Any
 
 from libqtile import hook
-from typing import Any
 
 from settings.bar import screens
 from settings.groups import groups
@@ -27,5 +27,5 @@ wmname: str = "LG3D"  # Required for some Java applications
 # --- Autostart Hook ---
 @hook.subscribe.startup_once
 def autostart() -> None:
-    home: str = os.path.expanduser(path="~/.config/qtile/autostart.sh")
+    home: str = os.path.expanduser(path="~/.config/qtile/scripts/autostart.sh")
     subprocess.run(args=[home])
