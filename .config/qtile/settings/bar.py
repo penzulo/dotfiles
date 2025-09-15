@@ -1,4 +1,3 @@
-import os
 import subprocess
 
 from libqtile import bar, widget
@@ -7,6 +6,20 @@ from libqtile.lazy import lazy
 
 from settings.keys.applications import terminal
 from settings.theme import colors, powerline
+
+
+def powerline_sep(
+    prev_bg: str, next_bg: str, direction: str = "left", end: bool = False
+) -> widget.TextBox:
+    """Return a powerline separator TextBox with correct colors."""
+    chars = {
+        ("left", False): "",
+        ("left", True): "",
+        ("right", False): "",
+        ("right", True): "",
+    }
+    char = chars.get((direction, end), "")
+    return widget.TextBox(char, foreground=next_bg, background=prev_bg, **powerline)
 
 
 def create_bar() -> bar.Bar:
@@ -19,32 +32,28 @@ def create_bar() -> bar.Bar:
                 highlight_method="text",
                 this_current_screen_border=colors["background-alt"],
                 block_highlight_text_color=colors["foreground"],
-                padding_x=10,
+                padding_x=8,
+                padding_y=4,
                 hide_unused=True,
                 background=colors["purple"],
             ),
-            widget.TextBox(
-                "",
-                foreground=colors["purple"],
-                **powerline,
+            powerline_sep(
+                colors["background"], colors["purple"], direction="right", end=True
             ),
             widget.Spacer(),
-            widget.TextBox(
-                "",
-                foreground=colors["background"],
-                **powerline,
+            powerline_sep(
+                colors["background"],
+                colors["yellow"],
+                direction="left",
+                end=True,
             ),
             widget.Clock(
                 format="󰥔 %B %d %H:%M",
-                background=colors["background"],
+                background=colors["yellow"],
                 mouse_callbacks={"Button1": lazy.spawn("gsimplecal")},
+                padding=10,
             ),
-            widget.TextBox(
-                "",
-                foreground=colors["purple"],
-                background=colors["background"],
-                **powerline,
-            ),
+            powerline_sep(colors["yellow"], colors["purple"]),
             widget.CheckUpdates(
                 distr="Arch",
                 display_format="󰏔 {updates}",
@@ -53,30 +62,23 @@ def create_bar() -> bar.Bar:
                 colour_have_updates=colors["foreground"],
                 colour_no_updates=colors["foreground"],
             ),
-            widget.TextBox(
-                "", foreground=colors["blue"], background=colors["purple"], **powerline
-            ),
+            powerline_sep(colors["purple"], colors["blue"]),
             widget.Volume(
                 fmt="󰕾 {}",
                 background=colors["blue"],
-                get_volume_command=os.path.expanduser(
-                    path="~/.config/qtile/scripts/volume.sh"
-                ),
+                get_volume_command="wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2 * 100) \"%\"}'",
+                padding=8,
             ),
-            widget.TextBox(
-                "", foreground=colors["aqua"], background=colors["blue"], **powerline
-            ),
+            powerline_sep(colors["blue"], colors["aqua"]),
             widget.Wlan(
                 interface="wlan0",
                 format="󰤨  {essid}",
                 disconnected_message="󰖪",
                 background=colors["aqua"],
-                padding=15,
+                padding=8,
                 mouse_callbacks={"Button1": lazy.spawn("iwgtk")},
             ),
-            widget.TextBox(
-                "", foreground=colors["green"], background=colors["aqua"], **powerline
-            ),
+            powerline_sep(colors["aqua"], colors["green"]),
             widget.Battery(
                 charge_char="󰂄",
                 discharge_char="󱟞",
@@ -96,15 +98,12 @@ def create_bar() -> bar.Bar:
                     "Button1": lazy.spawn(f"{terminal} --class btop -e btop")
                 },
             ),
-            widget.TextBox(
-                "",
-                foreground=colors["orange"],
-                background=colors["green"],
-                **powerline,
-            ),
-            widget.Systray(background=colors["orange"], icon_size=20, padding=10),
+            powerline_sep(colors["green"], colors["orange"]),
+            widget.Systray(background=colors["orange"], icon_size=20, padding=6),
         ],
         26,
+        background=colors["background"],
+        margin=[8, 8, 0, 8],
     )
 
 
@@ -112,10 +111,15 @@ def create_bar() -> bar.Bar:
 # Use xrandr to get the number of connected monitors
 command: str = "xrandr --query | rg ' connected' | wc -l"
 try:
-    num_monitors_str: str = (
-        subprocess.check_output(args=command, shell=True).decode().strip()
+    num_monitors = len(
+        [
+            m
+            for m in subprocess.check_output("xrandr --query", shell=True)
+            .decode()
+            .splitlines()
+            if " connected" in m
+        ]
     )
-    num_monitors: int = int(num_monitors_str)
 except (subprocess.CalledProcessError, ValueError) as e:
     # Fallback to 1 monitor if the command fails
     print(f"Error getting monitor count: {e}. Defaulting to 1.")

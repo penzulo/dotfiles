@@ -23,9 +23,9 @@ font_params: dict[str, str] = {
 
 layout_theme: dict[str, str] = {
     "border_width": 1,
-    "margin": 0,
-    "border_focus": colors["purple"],
-    "border_normal": colors["background"],
+    "margin": 8,
+    "border_focus": colors["foreground"],
+    "border_normal": colors["background-alt"],
 }
 
 powerline: dict[str, str] = {"fontsize": 26, "padding": 0}

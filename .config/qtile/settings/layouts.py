@@ -2,7 +2,7 @@ from libqtile.config import Match
 from libqtile.layout import Floating, Max, MonadTall, Stack, TreeTab
 from libqtile.layout.base import Layout
 
-from .theme import colors, font_params, layout_theme
+from settings.theme import colors, font_params, layout_theme
 
 layouts: list[Layout] = [
     MonadTall(**layout_theme),
@@ -34,6 +34,7 @@ floating_layout: Floating = Floating(
     float_rules=[
         # Run the utility of `xprop` to see the wm class and name of an X client.
         *Floating.default_float_rules,
+        Match(role="GtkFileChooserDialog"),
         Match(wm_class="confirmreset"),  # gitk
         Match(wm_class="makebranch"),  # gitk
         Match(wm_class="maketag"),  # gitk
