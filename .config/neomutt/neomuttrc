@@ -1,0 +1,32 @@
+source ~/.config/neomutt/colors/gruvbox/colors-gruvbox-shuber.muttrc
+source ~/.config/neomutt/colors/gruvbox/colors-gruvbox-shuber-extended.muttrc
+set realname = "Bhargav Deshpande"
+set from = "bhardesh2005@gmail.com"
+set use_from = yes
+set envelope_from = yes
+
+set mbox_type = Maildir
+set folder = "~/.mail/gmail"
+set spoolfile = "+INBOX"
+set record = "+[Gmail]/Sent Mail"
+set postponed = "+[Gmail]/Drafts"
+set trash = "+[Gmail]/Trash"
+
+set smtp_url = "smtp://bhardesh2005@gmail.com@smtp.gmail.com:587/"
+set smtp_pass = "`pass show Email/Google/Neomutt`"
+set sendmail = "/usr/bin/msmtp"
+set sendmail_wait = 0
+
+set ssl_force_tls = yes
+set editor = "nvim"
+set charset = "utf-8"
+
+# Sidebar
+set sidebar_visible = yes
+set sidebar_width = 30
+set sidebar_format = "%B%?F? [%F]?%* %?N?%N/?%S"
+
+auto_view text/html
+alternative_order text/plain text/enriched text/html
+
+set mailcap_path = ~/.config/neomutt/mailcap

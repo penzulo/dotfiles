@@ -1,0 +1,15 @@
+defaults
+auth on
+tls on
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+logfile ~/.msmtp.log
+
+account gmail
+host smtp.gmail.com
+port 587
+from bhardesh2005@gmail.com
+user bhardesh2005@gmail.com
+passwordeval "pass show Email/Google/Neomutt"
+
+account default : gmail
+

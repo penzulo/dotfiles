@@ -57,10 +57,16 @@ keys: list[Key] = [
         desc="Launch btop system monitor",
     ),
     Key(
+        [mod, "shift"],
+        "m",
+        lazy.spawn(f"{terminal} --class neomutt -e neomutt"),
+        desc="Launch Mail Viewer",
+    ),
+    Key(
         [mod],
         "s",
         lazy.spawn(
-            "sh -c 'fd . ~ | rofi -dmenu -p \"Search\" -i -no-show-icons | xargs -r xdg-open'"
+            "sh -c 'fd . ~ | rofi -dmenu -i -no-show-icons | xargs -r xdg-open'"
         ),
         desc="Search for files in home directory",
     ),

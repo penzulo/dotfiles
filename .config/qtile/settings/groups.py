@@ -35,7 +35,13 @@ group_props: list[GroupProperties] = [
             Match(wm_class="btop"),
         ],
     },
-    {"name": "DOC", "key": "4", "label": "󰈙", "layout": "monadtall", "matches": []},
+    {
+        "name": "DOC",
+        "key": "4",
+        "label": "󰈙",
+        "layout": "monadtall",
+        "matches": [Match(wm_class="neomutt")],
+    },
     {
         "name": "MUS",
         "key": "5",

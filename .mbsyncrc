@@ -1,0 +1,22 @@
+IMAPAccount gmail
+Host imap.gmail.com
+User bhardesh2005@gmail.com
+PassCmd "pass show Email/Google/Neomutt"
+SSLType IMAPS
+AuthMechs LOGIN
+
+IMAPStore gmail-remote
+Account gmail
+
+MaildirStore gmail-local
+Path ~/.mail/gmail/
+Inbox ~/.mail/gmail/INBOX
+
+Channel gmail
+Master :gmail-remote:
+Slave :gmail-local:
+Patterns *
+Create Slave
+Expunge Both
+SyncState *
+
