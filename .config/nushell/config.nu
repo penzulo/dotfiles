@@ -44,5 +44,6 @@ path add $"($nu.home-path)/.local/bin"
 # Initialize external tools by sourcing their config files.
 
 source aliases.nu
+source vars.nu
 source modules/zoxide.nu
 source modules/starship.nu

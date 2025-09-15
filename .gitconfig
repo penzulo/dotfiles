@@ -5,7 +5,7 @@
 
 [core]
     editor = helix
-	excludesFile = ~/.gitignore_glob
+	excludesFile = ~/.config/git/global_ignore
 
 [init]
     defaultBranch = main
@@ -21,7 +21,7 @@
 
 [commit]
 	gpgsign = true
-    template = ~/.gitmessage
+    template = ~/.config/git/gitmessage
 
 [alias]
     s = status -s
@@ -39,4 +39,4 @@
 
 # Include your work-specific config only for projects in your work directory
 [includeIf "gitdir:~/Workspace/"]
-    path = ~/.gitconfig-work[core]
+    path = ~/.config/git/workconfig[core]

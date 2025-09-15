@@ -40,6 +40,7 @@ floating_layout: Floating = Floating(
         Match(wm_class="ssh-askpass"),  # ssh-askpass
         Match(title="branchdialog"),  # gitk
         Match(wm_class="Pinentry-gtk"),  # GPG key password entry
+        Match(wm_class="iwgtk"),  # GPG key password entry
     ],
     **layout_theme,  # Apply the same border styling
 )

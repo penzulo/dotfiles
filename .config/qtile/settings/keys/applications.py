@@ -70,7 +70,7 @@ keys: list[Key] = [
     Key(
         [mod, "shift"],
         "n",
-        lazy.spawn("networkmanager_dmenu"),
-        desc="Show NetworkManager menu",
+        lazy.spawn("iwgtk"),
+        desc="Show Network menu",
     ),
 ]

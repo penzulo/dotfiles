@@ -72,7 +72,7 @@ def create_bar() -> bar.Bar:
                 disconnected_message="󰖪",
                 background=colors["aqua"],
                 padding=15,
-                mouse_callbacks={"Button1": lazy.spawn("networkmanager_dmenu")},
+                mouse_callbacks={"Button1": lazy.spawn("iwgtk")},
             ),
             widget.TextBox(
                 "", foreground=colors["green"], background=colors["aqua"], **powerline

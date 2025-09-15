@@ -14,6 +14,7 @@ done
 
 export PATH
 export LEDGER_FILE=~/Documents/Ledger/main.journal
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 
 # --- Aliases ---
 alias ..='cd ..'
