@@ -2,12 +2,12 @@ configuration {
     modi:            "drun";
     font:            "JetBrainsMono Nerd Font 12";
     show-icons:      true;
-    icon-theme:      "Papirus-Dark";
-    terminal:        "kitty";
+    icon-theme:      "Gruvbox-Dark-Medium";
+    terminal:        "alacritty";
     drun-display-format: "{name}";
-    lines: 5;
     sort: true;
     sorting-method: "fzf";
+    lines: 0;
 }
 
 /* Load the theme file */
