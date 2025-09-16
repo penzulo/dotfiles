@@ -1,9 +1,7 @@
-from typing import Literal
-
 from libqtile.config import Key
 from libqtile.lazy import lazy
 
-from .system import mod
+from settings.keys.system import mod
 
 terminal: str = "alacritty"
 
@@ -66,7 +64,15 @@ keys: list[Key] = [
         [mod],
         "s",
         lazy.spawn(
-            "sh -c 'fd . ~ | rofi -dmenu -i -no-show-icons | xargs -r xdg-open'"
+            "sh -c 'fd -H "
+            "-E .git "
+            "-E .mail "
+            "-E .cache "
+            "-E .mypy_cache "
+            "-E __pycache__ "
+            ". ~ | "
+            'rofi -dmenu -p "Search" -i -no-show-icons | '
+            "xargs -r xdg-open'"
         ),
         desc="Search for files in home directory",
     ),

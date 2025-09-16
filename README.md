@@ -1,48 +1,85 @@
-# My Dotfiles ⚙️
+# 🖥️ My Arch Linux Rice
 
-These are my personal configuration files for building a productive and beautiful shell environment. The setup is managed using a bare Git repository technique.
+[![Arch Linux](https://img.shields.io/badge/OS-Arch%20Linux-%231793d1?logo=arch-linux&logoColor=white)](https://archlinux.org)
+[![Qtile](https://img.shields.io/badge/WM-Qtile-%234477AA?logo=qtile&logoColor=white)](https://qtile.org)
+[![Gruvbox](https://img.shields.io/badge/Theme-Gruvbox%20Dark-%23b57614)](https://github.com/morhetz/gruvbox)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
----
 
-### ## Contents
-
-This repository currently manages configurations for:
-* **Shell:** [Nushell](https://www.nushell.sh/)
-* **Prompt:** [Starship](https://starship.rs/)
-* ...and more to come!
+A clean, minimal and cohesive desktop setup built on **Qtile** with a **Gruvbox Dark** color scheme.  
+This configuration is tuned for a smooth workflow, minimal distractions, and consistent aesthetics.
 
 ---
 
-### ## Installation
+## ⚙️ System Overview
 
-To set this up on a new machine, follow these steps:
+| Component            | Details                          |
+|-----------------------|--------------------------------|
+| **OS**               | Arch Linux                       |
+| **Display Server**   | X11                              |
+| **Window Manager**   | Qtile (powerline bar, gaps, rounded corners) |
+| **Compositor**       | Picom (blur, transparency, rounded corners) |
+| **Display Manager**  | LightDM (Slick-greeter)           |
+| **Lockscreen**        | Betterlockscreen (Gruvbox wallpapers) |
+| **Shell**             | Nushell (primary) + Bash         |
+| **Prompt**             | Starship                         |
 
-1.  **Clone the repository:**
-    ```nu
-    git clone --bare https://github.com/penzulo/dotfiles.git $"($env.USERPROFILE)/.dotfiles"
-    ```
+---
 
-2.  **Define the alias:**
-    Add the following alias to your shell's configuration file (e.g., `.bashrc`, `.zshrc`, or `config.nu` if you're bootstrapping Nushell).
-    ```nu
-    alias dotgit = git --git-dir $"($env.USERPROFILE)\.dotfiles" --work-tree $env.USERPROFILE
-    ```
+## 🎨 Theming
 
-3.  **Check out the files:**
-    Source your shell config or open a new terminal, then run the checkout command. You may need to stash existing default files if they conflict.
-    ```nu
-    # Checkout the contents from the repo into your home directory
-    dotgit checkout
+| Type           | Choice                     |
+|----------------|------------------------------|
+| **Color Scheme** | Gruvbox Dark                |
+| **Font**           | JetBrainsMono Nerd Font       |
+| **GTK Theme**      | Orchis-Dark-Compact            |
+| **Icon Theme**     | Tela Circle Dark               |
+| **Terminal**       | Alacritty                      |
+| **Application Launcher** | Rofi (apps, file search, power menu, pass) |
+| **Notifications**  | Dunst (Gruvbox styled, transparent) |
 
-    # If the above command fails due to existing files, force the checkout.
-    # WARNING: This will overwrite existing files.
-    dotgit checkout -f
-    ```
+---
 
-4.  **Set the `showUntrackedFiles` flag:**
-    Configure the local repository to hide untracked files in its status.
-    ```nu
-    dotgit config --local status.showUntrackedFiles no
-    ```
+## 🛠 Core Tools
 
-You are now ready to go!
+| Category            | Tool                        |
+|----------------------|----------------------------|
+| **Audio**            | PipeWire + `wpctl`          |
+| **Network**           | iwgtk                       |
+| **Screenshots**       | Flameshot                   |
+| **File Managers**      | Yazi (CLI) + Thunar (GUI)     |
+| **Password Management** | pass (with Rofi integration) |
+| **Email** | neomutt |
+| **Package Management** | pacman + yay + flatpak |
+
+---
+
+## 📸 Screenshots
+
+| Desktop | Rofi | Dunst | Yazi |
+|---------|------|-------|------|
+| ![](Pictures/Screenshots/desktop.png) | ![](Pictures/Screenshots/rofi.png) | ![](Pictures/Screenshots/dunst.png) | ![](Pictures/Screenshots/yazi.png) |
+
+---
+
+## 💡 Notes
+
+- Configs are modular and easy to extend.
+- Gruvbox Dark is applied universally for consistency.
+- Power menu, scratchpads, and more are integrated via Rofi and Qtile.
+- All fonts and icons are patched and themed for Nerd Font compatibility.
+
+---
+
+## 📥 Installation (Optional)
+
+> ⚠️ Not automated yet — configs are meant to be referenced manually.
+
+```bash
+git clone https://github.com/<your-username>/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
+# Copy configs manually or with a script
+```
+
+## 📝 License
+MIT — feel free to reuse or adapt.
