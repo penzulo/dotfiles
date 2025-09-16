@@ -1,0 +1,82 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json",
+  "logo": {
+    "type": "auto",
+    "source": "arch",
+    "padding": { "top": 1, "left": 0, "right": 4 },
+    "position": "left"
+  },
+  "display": {
+    "separator": ": ",
+    "disableLinewrap": true,
+    "showErrors": false,
+    "brightColor": true
+  },
+  "modules": [
+    {
+      "type": "title",
+      "key": " ",
+      "keyIcon": "",
+      "fqdn": false
+    },
+    {
+      "type": "separator",
+      "string": "-",
+      "outputColor": ""
+    },
+    {
+      "type": "os",
+      "keyIcon": ""
+    },
+    {
+      "type": "kernel",
+      "keyIcon": ""
+    },
+    {
+      "type": "packages",
+      "keyIcon": "󰏖"
+    },
+    {
+      "type": "shell",
+      "keyIcon": ""
+    },
+    {
+      "type": "wm",
+      "keyIcon": ""
+    },
+    {
+      "type": "terminal",
+      "keyIcon": ""
+    },
+    {
+      "type": "font",
+      "keyIcon": ""
+    },
+    {
+      "type": "theme",
+      "keyIcon": "󰉼"
+    },
+    {
+      "type": "icons",
+      "keyIcon": ""
+    },
+    {
+      "type": "memory",
+      "keyIcon": "",
+      "percent": { "green": 50, "yellow": 80, "type": 0 }
+    },
+    {
+      "type": "gpu",
+      "keyIcon": "󰾲",
+      "detectionMethod": "pci",
+      "temp": false
+    },
+    "break",
+    {
+      "type": "colors",
+      "keyIcon": "",
+      "symbol": "block",
+      "block": { "width": 3, "range": [0, 15] }
+    }
+  ]
+}
