@@ -1,0 +1,21 @@
+[general]
+import = [
+  "~/.config/alacritty/gruvbox_dark.toml"
+]
+
+# ==========================================
+# Font Configuration
+# ==========================================
+[font]
+normal = { family = "JetBrainsMono Nerd Font", style = "Medium" }
+bold = { family = "JetBrainsMono Nerd Font", style = "Bold" }
+italic = { family = "JetBrainsMono Nerd Font", style = "Italic" }
+size = 10.5
+
+[cursor]
+style = { shape = "Block", blinking = "On" }
+
+[window]
+decorations = "full"
+opacity = 0.85
+blur = true
