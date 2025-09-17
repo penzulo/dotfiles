@@ -11,54 +11,43 @@ This configuration is tuned for a smooth workflow, minimal distractions, and con
 
 ---
 
-## ⚙️ System Overview
+## ✨ Gallery
 
-| Component            | Details                          |
-|-----------------------|--------------------------------|
-| **OS**               | Arch Linux                       |
-| **Display Server**   | X11                              |
-| **Window Manager**   | Qtile (powerline bar, gaps, rounded corners) |
-| **Compositor**       | Picom (blur, transparency, rounded corners) |
-| **Display Manager**  | LightDM (Slick-greeter)           |
-| **Lockscreen**        | Betterlockscreen (Gruvbox wallpapers) |
-| **Shell**             | Nushell (primary) + Bash         |
-| **Prompt**             | Starship                         |
+| Clean Desktop | Application Launcher (Rofi) |
+| :---: | :---: |
+| ![](Pictures/Screenshots/rice/neofetch.png) | ![](Pictures/Screenshots/rice/rofi.png) |
+
+| Notifications (Dunst) | Lock Screen |
+| :---: | :---: |
+| ![](Pictures/Screenshots/rice/dunst.png) | ![](Pictures/Screenshots/rice/lockscreen.png) |
 
 ---
 
-## 🎨 Theming
+## 🔧 The Stack
 
-| Type           | Choice                     |
-|----------------|------------------------------|
-| **Color Scheme** | Gruvbox Dark                |
-| **Font**           | JetBrainsMono Nerd Font       |
-| **GTK Theme**      | Orchis-Dark-Compact            |
-| **Icon Theme**     | Tela Circle Dark               |
-| **Terminal**       | Alacritty                      |
-| **Application Launcher** | Rofi (apps, file search, power menu, pass) |
-| **Notifications**  | Dunst (Gruvbox styled, transparent) |
+This setup is built on a stack of lightweight, configurable, and powerful tools.
 
----
+### ⚙️ Core System
+* **OS** → **Arch Linux**
+* **Window Manager** → **Qtile**
+* **Compositor** → **Picom**
+* **Display Manager** → **LightDM**
+* **Shell** → **Nushell**
+* **Terminal** → **Kitty**
 
-## 🛠 Core Tools
+### 🎨 Theming & UI
+* **Color Scheme** → **Gruvbox Dark**
+* **Font** → **JetBrainsMono Nerd Font**
+* **Application Launcher** → **Rofi**
+* **Notifications** → **Dunst**
+* **GTK & Icons** → **Orchis-Dark & Tela Circle**
 
-| Category            | Tool                        |
-|----------------------|----------------------------|
-| **Audio**            | PipeWire + `wpctl`          |
-| **Network**           | iwgtk                       |
-| **Screenshots**       | Flameshot                   |
-| **File Managers**      | Yazi (CLI) + Thunar (GUI)     |
-| **Password Management** | pass (with Rofi integration) |
-| **Email** | neomutt |
-| **Package Management** | pacman + yay + flatpak |
-
----
-
-## 📸 Screenshots
-
-| Desktop | Rofi | Dunst | Yazi |
-|---------|------|-------|------|
-| ![](Pictures/Screenshots/desktop.png) | ![](Pictures/Screenshots/rofi.png) | ![](Pictures/Screenshots/dunst.png) | ![](Pictures/Screenshots/yazi.png) |
+### 🛠️ Key Applications
+* **Audio** → **PipeWire**
+* **File Managers** → **Yazi (CLI) + Thunar (GUI)**
+* **Password Management** → **pass**
+* **Email** → **NeoMutt**
+* **Screenshots** → **Flameshot**
 
 ---
 
@@ -76,7 +65,7 @@ This configuration is tuned for a smooth workflow, minimal distractions, and con
 > ⚠️ Not automated yet — configs are meant to be referenced manually.
 
 ```bash
-git clone https://github.com/<your-username>/dotfiles.git ~/.dotfiles
+git clone https://github.com/penzulo/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
 # Copy configs manually or with a script
 ```
