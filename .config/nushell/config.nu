@@ -12,7 +12,7 @@
 # Set Nushell's internal behavior.
 use std/util "path add"
 $env.config = {
-    buffer_editor: "nvim"
+    buffer_editor: "helix"
     show_banner: false
     ls: {
         use_ls_colors: true
@@ -36,6 +36,7 @@ $env.config = {
 path add $"($nu.home-path)/.bun/bin"
 path add $"($nu.home-path)/.cargo/bin"
 path add $"($nu.home-path)/.local/bin"
+path add $"($nu.home-path)/.local/scripts"
 
 
 # ================================

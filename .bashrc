@@ -5,6 +5,7 @@ custom_paths=(
   "$HOME/.cargo/bin",
   "$HOME/.bun/bin",
   "$HOME/.local/bin",
+  "$HOME/.local/scripts",
 )
 for path in "${custom_paths[@]}"; do
     if [[ ":$PATH:" != *":$path:"* ]]; then
