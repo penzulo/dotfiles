@@ -1,0 +1,13 @@
+[push]
+	default = current
+	followTags = true
+
+[branch]
+	autoSetupMerge = always
+	autoSetupRebase = always
+
+[fetch]
+	prune = true
+
+# [blame]
+# 	ignorerevsfile

@@ -39,4 +39,4 @@
 
 # Include your work-specific config only for projects in your work directory
 [includeIf "gitdir:~/Workspace/"]
-    path = ~/.config/git/workconfig[core]
+    path = ~/.config/git/workconfig
