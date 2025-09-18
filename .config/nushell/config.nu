@@ -36,7 +36,6 @@ $env.config = {
 path add $"($nu.home-path)/.bun/bin"
 path add $"($nu.home-path)/.cargo/bin"
 path add $"($nu.home-path)/.local/bin"
-path add $"($nu.home-path)/.local/scripts"
 
 
 # ================================

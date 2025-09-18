@@ -1,6 +1,3 @@
-export EDITOR="helix"
-export VISUAL="HELIX"
-
 custom_paths=(
   "$HOME/.cargo/bin",
   "$HOME/.bun/bin",
@@ -14,6 +11,8 @@ for path in "${custom_paths[@]}"; do
 done
 
 export PATH
+export EDITOR="helix"
+export VISUAL="HELIX"
 export LEDGER_FILE=~/Documents/Ledger/main.journal
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 
@@ -35,11 +34,15 @@ alias gc='git commit -m'
 alias gs='git status'
 alias gp='git push'
 alias gl='git pull'
+alias dot='git --git-dir "$HOME/.dotfiles" --work-tree $HOME'
 
 # Editors
 alias vi=nvim
 alias vim=nvim
 alias hx=helix
+
+# Zellij
+alias zj='zellij attach -c'
 
 # --- External Tools ---
 eval "$(starship init bash)"

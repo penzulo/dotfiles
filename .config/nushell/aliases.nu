@@ -1,5 +1,5 @@
 # -- Dotfiles --
-alias dotgit = git --git-dir $"($env.HOME)/.dotfiles" --work-tree $env.HOME
+alias dot = git --git-dir $"($env.HOME)/.dotfiles" --work-tree $env.HOME
 
 # -- Listing files (if you have eza installed, otherwise use ls) --
 alias ls = eza --icons
@@ -16,5 +16,10 @@ alias gs = git status
 alias gp = git push
 alias gl = git pull
 
-# -- Helix --
+# -- Editors --
+alias vi = nvim
+alias vim = nvim
 alias hx = helix
+
+# -- Zellij --
+alias zj = zellij attach -c
