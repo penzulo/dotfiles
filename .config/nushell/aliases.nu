@@ -22,4 +22,4 @@ alias vim = nvim
 alias hx = helix
 
 # -- Zellij --
-alias zj = zellij attach -c
+alias zj = zellij

@@ -1,0 +1,11 @@
+layout {
+    tab name="Editor" {
+        pane command="helix" cwd="."
+    }
+    tab name="Work" {
+        pane split_direction="vertical" {
+            pane name="Git" command="nu" cwd="." 
+            pane name="Shell" command="nu" cwd="."
+        }
+    }
+}

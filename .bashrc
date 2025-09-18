@@ -42,7 +42,7 @@ alias vim=nvim
 alias hx=helix
 
 # Zellij
-alias zj='zellij attach -c'
+alias zj=zellij
 
 # --- External Tools ---
 eval "$(starship init bash)"
