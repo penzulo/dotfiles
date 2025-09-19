@@ -1,17 +1,66 @@
-# [Created by task 3.4.1 9/14/2025 02:40:47]
-data.location=/home/penzulo/.task
-news.version=3.4.1
-
-# [General Settings]
-confirmation=yes
-verbose=on
+# ---------- General Defaults ----------
+confirmation=no
 default.command=next
-include dark-256.theme
+verbose=nothing
+weekstart=monday
+dateformat=Y-M-D
+due=7
+color=on
 
-# --- Custom Report: 'next' ---
-# This report shows the most urgent tasks sorted by urgency.
-report.next.columns=id,project,tags,due,urgency,description
-report.next.labels=ID,Project,Tags,Due,Urg,Description
-report.next.filter=status:pending limit:15
-report.next.sort=urgency-
+# ---------- Theme ----------
+include /usr/share/doc/task/rc/dark-violets-256.theme
 
+# ---------- Custom Fields (UDAs) ----------
+uda.epic.type=string
+uda.epic.label=Epic
+
+uda.sprint.type=string
+uda.sprint.label=Sprint
+
+uda.storypoints.type=numeric
+uda.storypoints.label=SP
+
+# ---------- Useful Reports ----------
+# Show all tasks grouped by project
+report.project.columns=id,project,priority,due,tags,description
+report.project.labels=ID,Project,Pri,Due,Tags,Description
+report.project.sort=project+,priority-,due+
+report.project.filter=status:pending
+
+# Show tasks that are marked for review
+report.review.columns=id,project,priority,description
+report.review.labels=ID,Project,Pri,Description
+report.review.filter=status:pending +review
+
+# Show tasks that are blocked by others
+report.blocked.columns=id,project,depends,description
+report.blocked.labels=ID,Project,Blocked By,Description
+report.blocked.filter=status:pending +blocked
+
+# Show backlog (no sprint assigned)
+report.backlog.columns=id,project,epic,storypoints,description
+report.backlog.labels=ID,Project,Epic,SP,Description
+report.backlog.filter=status:pending sprint:
+
+# Show tasks in current sprint (replace the sprint value dynamically when you run it)
+report.sprint.columns=id,project,epic,storypoints,due,description
+report.sprint.labels=ID,Project,Epic,SP,Due,Description
+# example: task sprint sprint:2025-09-SPR3
+# (filter is passed via CLI not hardcoded here)
+
+# Show tasks grouped by epic (good for seeing roadmap phase progress)
+report.byepic.columns=id,epic,project,storypoints,description
+report.byepic.labels=ID,Epic,Project,SP,Description
+report.byepic.sort=epic+,project+,priority-,due+
+
+# ---------- Aliases ----------
+alias.p=project
+alias.a=add
+alias.ae=exec $HOME/.local/scripts/taskadd   # editor-based add
+alias.ls=list
+alias.d=done
+alias.n=next
+alias.h=history
+alias.bl=backlog
+alias.sp=sprint
+alias.ep=byepic

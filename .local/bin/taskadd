@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+TMP=$(mktemp /tmp/taskadd.XXXXXX)
+cp ~/.task/taskform "$TMP"
+
+${EDITOR:-nano} "$TMP"
+
+# Parse fields
+DESC=$(grep -A0 '^# Description' "$TMP" | tail -n +2 | xargs)
+PROJ=$(grep -A0 '^# Project' "$TMP" | tail -n +2 | xargs)
+EPIC=$(grep -A0 '^# Epic' "$TMP" | tail -n +2 | xargs)
+SPRINT=$(grep -A0 '^# Sprint' "$TMP" | tail -n +2 | xargs)
+SP=$(grep -A0 '^# Story Points' "$TMP" | tail -n +2 | xargs)
+DUE=$(grep -A0 '^# Due' "$TMP" | tail -n +2 | xargs)
+TAGS=$(grep -A0 '^# Tags' "$TMP" | tail -n +2 | xargs)
+
+# Build task add command
+CMD=(task add "$DESC")
+[[ -n "$PROJ" ]] && CMD+=("project:$PROJ")
+[[ -n "$EPIC" ]] && CMD+=("epic:$EPIC")
+[[ -n "$SPRINT" ]] && CMD+=("sprint:$SPRINT")
+[[ -n "$SP" ]] && CMD+=("storypoints:$SP")
+[[ -n "$DUE" ]] && CMD+=("due:$DUE")
+for tag in $TAGS; do CMD+=("+$tag"); done
+
+echo "Running: ${CMD[*]}"
+"${CMD[@]}"
+
