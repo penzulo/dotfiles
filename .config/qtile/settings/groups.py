@@ -30,6 +30,7 @@ group_props: list[GroupProperties] = [
         "label": "",
         "layout": "monadtall",
         "matches": [
+            Match(wm_class="pacman"),
             Match(wm_class="thunar"),
             Match(wm_class="yazi"),
             Match(wm_class="btop"),

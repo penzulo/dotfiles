@@ -55,12 +55,14 @@ def create_bar() -> bar.Bar:
             ),
             powerline_sep(colors["yellow"], colors["purple"]),
             widget.CheckUpdates(
-                distr="Arch",
+                distro="Arch_checkupdates",
                 display_format="󰏔 {updates}",
                 no_update_string="󰏔 0",
+                update_interval=1800,
                 background=colors["purple"],
                 colour_have_updates=colors["foreground"],
                 colour_no_updates=colors["foreground"],
+                mouse_callbacks={"Button1": lazy.spawn(f"{terminal} --class pacman -e sudo pacman -Syu")}
             ),
             powerline_sep(colors["purple"], colors["blue"]),
             widget.Volume(
