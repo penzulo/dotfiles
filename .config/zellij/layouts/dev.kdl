@@ -8,4 +8,7 @@ layout {
             pane name="Shell" command="nu" cwd="."
         }
     }
+    tab name="Tools" {
+        pane
+    }
 }
