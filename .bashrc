@@ -15,6 +15,7 @@ export EDITOR="helix"
 export VISUAL="HELIX"
 export LEDGER_FILE=~/Documents/Ledger/main.journal
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+export DOCKER_HOST="unix:///var/run/docker.sock"
 
 # --- Aliases ---
 alias ..='cd ..'
