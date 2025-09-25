@@ -4,8 +4,7 @@ from libqtile import bar, widget
 from libqtile.config import Screen
 from libqtile.lazy import lazy
 
-from settings.keys.applications import terminal
-from settings.theme import colors, powerline
+from settings.constants import colors, powerline, pterm
 
 
 def powerline_sep(
@@ -62,7 +61,9 @@ def create_bar() -> bar.Bar:
                 background=colors["purple"],
                 colour_have_updates=colors["foreground"],
                 colour_no_updates=colors["foreground"],
-                mouse_callbacks={"Button1": lazy.spawn(f"{terminal} --class pacman -e sudo pacman -Syu")}
+                mouse_callbacks={
+                    "Button1": lazy.spawn(f"{pterm} --class pacman -e sudo pacman -Syu")
+                },
             ),
             powerline_sep(colors["purple"], colors["blue"]),
             widget.Volume(
@@ -97,7 +98,7 @@ def create_bar() -> bar.Bar:
                 low_percentage=0.20,
                 format="{char} {percent:2.0%}",
                 mouse_callbacks={
-                    "Button1": lazy.spawn(f"{terminal} --class btop -e btop")
+                    "Button1": lazy.spawn(f"{pterm} --class btop -e btop")
                 },
             ),
             powerline_sep(colors["green"], colors["orange"]),

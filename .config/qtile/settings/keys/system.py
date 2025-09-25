@@ -1,16 +1,18 @@
-from typing import Literal
-
 from libqtile.config import Key
 from libqtile.lazy import lazy
 
 from settings.cheatsheet import show_keybindings
-
-mod: Literal["mod4"] = "mod4"
+from settings.constants import mod
 
 # A list of system-related keybindings
 keys: list[Key] = [
     # --- Qtile / Config ---
-    Key([mod], "c", lazy.function(show_keybindings), desc="Show keybinding cheatsheet"),
+    Key(
+        [mod, "control"],
+        "k",
+        lazy.function(show_keybindings),
+        desc="Show keybinding cheatsheet",
+    ),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     # --- Screenshots ---
     Key([], "Print", lazy.spawn("flameshot gui"), desc="Take a screenshot"),

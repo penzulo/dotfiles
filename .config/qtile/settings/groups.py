@@ -1,14 +1,14 @@
 from libqtile.config import Group, Key, Match
 from libqtile.lazy import lazy
 
+from settings.constants import mod
 from settings.keys import keys
-from settings.keys.system import mod
 from settings.schemas import GroupProperties
 
 # --- GROUP CONFIGURATION ---
 # The properties for each group.
 # Note: Using Nerd Font icons for labels is a common practice for a clean look.
-# Make sure you have a Nerd Font installed and configured in your theme.py.
+# Make sure you have a Nerd Font installed and configured in your constants.py.
 group_props: list[GroupProperties] = [
     {
         "name": "DEV",
@@ -41,7 +41,7 @@ group_props: list[GroupProperties] = [
         "key": "4",
         "label": "󰈙",
         "layout": "monadtall",
-        "matches": [Match(wm_class="neomutt")],
+        "matches": [Match(wm_class="neomutt"), Match(wm_class="ONLYOFFICE")],
     },
     {
         "name": "MUS",

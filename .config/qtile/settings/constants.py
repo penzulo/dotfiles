@@ -16,16 +16,17 @@ colors: dict[str, str] = {
 }
 
 # Font settings
-font_params: dict[str, str] = {
-    "font": "JetBrainsMono Nerd Font",
-    "fontsize": 14,
-}
+font_params: dict[str, str | int] = {"font": "JetBrainsMono Nerd Font", "fontsize": 14}
+powerline = {"fontsize": 26, "padding": 0}
 
-layout_theme: dict[str, str] = {
+# Layout settings
+layout_theme: dict[str, str | int] = {
     "border_width": 1,
     "margin": 8,
     "border_focus": colors["foreground"],
     "border_normal": colors["background-alt"],
 }
 
-powerline: dict[str, str] = {"fontsize": 26, "padding": 0}
+mod = "mod4"
+pterm = "alacritty"  # Primary Terminal
+sterm = "kitty"  # Secondary Terminal

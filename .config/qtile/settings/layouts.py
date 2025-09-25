@@ -2,7 +2,7 @@ from libqtile.config import Match
 from libqtile.layout import Floating, Max, MonadTall, Stack, TreeTab
 from libqtile.layout.base import Layout
 
-from settings.theme import colors, font_params, layout_theme
+from settings.constants import colors, font_params, layout_theme
 
 layouts: list[Layout] = [
     MonadTall(**layout_theme),
@@ -42,6 +42,7 @@ floating_layout: Floating = Floating(
         Match(title="branchdialog"),  # gitk
         Match(wm_class="Pinentry-gtk"),  # GPG key password entry
         Match(wm_class="iwgtk"),  # GPG key password entry
+        Match(wm_class="yazi-float"),  # Floating yazi windows for helix
     ],
     **layout_theme,  # Apply the same border styling
 )
