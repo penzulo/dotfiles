@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# Define colors and icons
+COLOR_RED="\033[0;31m"
+COLOR_GREEN="\033[0;32m"
+COLOR_YELLOW="\033[0;33m"
+COLOR_RESET="\033[0m"
+
+ICON_MODIFIED=""
+ICON_ADDED=""
+ICON_UNTRACKED=""
+ICON_RENAMED=""
+ICON_DELETED=""
+
+git status --porcelain=v1 | while IFS= read -r line; do
+    # Extract the two-character status code
+    xy_status="${line:0:2}"
+    # Extract the file path, handling potential quoting
+    file_path="${line:3}"
+    
+    # Parse the first character (staging area status)
+    x="${xy_status:0:1}"
+    # Parse the second character (working tree status)  
+    y="${xy_status:1:1}"
+    
+    case "$xy_status" in
+        "M ") echo -e "${COLOR_YELLOW}${ICON_MODIFIED} Modified:${COLOR_RESET}  ${file_path}" ;;
+        " M") echo -e "${COLOR_YELLOW}${ICON_MODIFIED} Modified:${COLOR_RESET}  ${file_path}" ;;
+        "MM") echo -e "${COLOR_YELLOW}${ICON_MODIFIED} Modified:${COLOR_RESET}  ${file_path}" ;;
+        "A ") echo -e "${COLOR_GREEN}${ICON_ADDED} Added:${COLOR_RESET}     ${file_path}" ;;
+        "AM") echo -e "${COLOR_GREEN}${ICON_ADDED} Added+Mod:${COLOR_RESET} ${file_path}" ;;
+        "??") echo -e "${COLOR_RED}${ICON_UNTRACKED} Untracked:${COLOR_RESET} ${file_path}" ;;
+        "R ") echo -e "${COLOR_BLUE}${ICON_RENAMED} Renamed:${COLOR_RESET}   ${file_path}" ;;
+        " D") echo -e "${COLOR_RED}${ICON_DELETED} Deleted:${COLOR_RESET}   ${file_path}" ;;
+        "D ") echo -e "${COLOR_RED}${ICON_DELETED} Deleted:${COLOR_RESET}   ${file_path}" ;;
+        *) echo -e "${COLOR_YELLOW}${xy_status}${COLOR_RESET} ${file_path}" ;;
+    esac
+done

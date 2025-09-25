@@ -24,7 +24,7 @@
     template = ~/.config/git/gitmessage
 
 [alias]
-    s = status -s
+    s = !~/.local/bin/git-pretty-status
     co = checkout
     br = branch
     ci = commit
