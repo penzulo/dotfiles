@@ -17,3 +17,6 @@ right = ["diagnostics", "selections", "position", "file-encoding", "file-line-en
 [editor.indent-guides]
 render = true
 character = "."
+
+[keys.normal]
+C-g = ":run-shell-command ~/.config/helix/scripts/yazi-chooser.sh"

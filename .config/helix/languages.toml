@@ -1,29 +1,182 @@
 [language-server]
 pyright = { command = "pyright-langserver", args = ["--stdio"], config = {} }
+biome = { command = "biome", args = ["lsp-proxy"] }
+vscode-json-languageserver = { command = "vscode-json-languageserver", args = ["--stdio"], config = { provideFormatter = true, json = { validate = { enable = true } } } }
 
 [[language]]
 name = "python"
 scope = "source.python"
 injection-regex = "py(thon)?"
-file-types = ["py", "pyi", "py3", "pyw", "ptl", "rpy", "cpy", "ipy", "pyt", { glob = ".python_history" }, { glob = ".pythonstartup" }, { glob = ".pythonrc" }, { glob = "*SConstruct" }, { glob = "*SConscript" }, { glob = "*sconstruct" }]
-shebangs = ["python", "uv"]
-roots = ["pyproject.toml", "setup.py", "uv.lock", "poetry.lock", "pyrightconfig.json", "requirements.txt"]
+shebangs = [
+    "python",
+    "uv",
+]
+roots = [
+    "pyproject.toml",
+    "setup.py",
+    "uv.lock",
+    "poetry.lock",
+    "pyrightconfig.json",
+    "requirements.txt",
+]
 comment-token = "#"
-language-servers = ["pyright","ruff"]
-indent = { tab-width = 4, unit = "    " }
+language-servers = [
+    "pyright",
+    "ruff",
+]
 auto-format = true
+file-types = [
+    "py",
+    "pyi",
+    "py3",
+    "pyw",
+    "ptl",
+    "rpy",
+    "cpy",
+    "ipy",
+    "pyt",
+    { glob = ".python_history" },
+    { glob = ".pythonstartup" },
+    { glob = ".pythonrc" },
+    { glob = "*SConstruct" },
+    { glob = "*SConscript" },
+    { glob = "*sconstruct" },
+]
 
+[language.indent]
+tab-width = 4
+unit = "    "
 
 [language.formatter]
 command = "ruff"
 args = [
-  "check",
-  "--fix",
-  "--stdin-filename",
-  "{buffer_path}",
-  "-"
+    "check",
+    "--select",
+    "E,F,B,B9,C4,SIM,I,UP,PIE,PGH,PYI,RUF",
+    "--fix",
+    "--stdin-filename",
+    "{buffer_path}",
+    "-",
 ]
 
-[[grammar]]
-name ="python"
-source = { git = "https://github.com/tree-sitter/tree-sitter-python", rev = "4bfdd9033a2225cc95032ce77066b7aeca9e2efc" }
+[[language]]
+name = "javascript"
+scope = "source.js"
+injection-regex = "(js|javascript)"
+language-id = "javascript"
+file-types = ["js", "mjs", "cjs", "rules", "es6", "pac", { glob = ".node_repl_history" }, { glob = "jakefile" }]
+shebangs = ["node"]
+roots = [ "package.json", "jsconfig.json" ]
+comment-token = "//"
+block-comment-tokens = { start = "/*", end = "*/" }
+auto-format = true
+language-servers = [
+    { name = "typescript-language-server", except-features = ["format"] },
+    "biome",
+]
+
+[[language]]
+name = "typescript"
+scope = "source.ts"
+injection-regex = "(ts|typescript)"
+language-id = "typescript"
+file-types = ["ts", "mts", "cts"]
+shebangs = ["deno", "bun", "ts-node"]
+roots = ["package.json", "tsconfig.json"]
+comment-token = "//"
+block-comment-tokens = { start = "/*", end = "*/" }
+auto-format = true
+language-servers = [
+    { name = "typescript-language-server", except-features = ["format"] },
+    "biome",
+]
+
+[[language]]
+name = "tsx"
+scope = "source.tsx"
+injection-regex = "(tsx)"
+language-id = "typescriptreact"
+file-types=["tsx"]
+roots = ["package.json", "tsconfig.json"]
+comment-token = "//"
+block-comment-tokens = { start = "/*", end = "*/" }
+auto-format = true
+language-servers = [
+    { name = "typescript-language-server", except-features = ["format"] },
+    "biome",
+]
+
+[[language]]
+name = "jsx"
+scope = "source.jsx"
+injection-regex = "jsx"
+language-id = "javascriptreact"
+file-types=["jsx"]
+roots = ["package.json", "jsconfig.json"]
+comment-token = "//"
+block-comment-tokens = { start = "/*", end = "*/" }
+auto-format = true
+language-servers = [
+    { name = "typescript-language-server", except-features = ["format"] },
+    "biome",
+]
+
+[[language]]
+name = "json"
+scope = "source.json"
+injection-regex = "json"
+file-types = [
+  "json",
+  "arb",
+  "ipynb",
+  "geojson",
+  "gltf",
+  "webmanifest",
+  { glob = "flake.lock" },
+  { glob = ".babelrc" },
+  { glob = ".bowerrc" },
+  { glob = ".jscrc" },
+  "js.map",
+  "ts.map",
+  "css.map",
+  { glob = ".jslintrc" },
+  "jsonl",
+  { glob = ".vuerc" },
+  { glob = "composer.lock" },
+  { glob = ".watchmanconfig" },
+  "avsc",
+  "ldtk",
+  "ldtkl",
+  { glob = ".swift-format" },
+  "sublime-build",
+  "sublime-color-scheme",
+  "sublime-commands",
+  "sublime-completions",
+  "sublime-keymap",
+  "sublime-macro",
+  "sublime-menu",
+  "sublime-mousemap",
+  "sublime-project",
+  "sublime-settings",
+  "sublime-theme",
+  "sublime-workspace"
+]
+auto-format = true
+language-servers = [
+    { name = "vscode-json-languageserver", except-features = ["format"] },
+    "biome",
+]
+
+[[language]]
+name = "jsonc"
+scope = "source.json"
+injection-regex = "jsonc"
+file-types = ["jsonc", { glob = "{t,j}sconfig.json" }, { glob = "bun.lock" }]
+comment-token = "//"
+block-comment-tokens = { start = "/*", end = "*/" }
+grammar = "json"
+auto-format = true
+language-servers = [
+    { name = "vscode-json-languageserver", except-features = ["format"] },
+    "biome",
+]
