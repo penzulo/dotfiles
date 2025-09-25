@@ -337,7 +337,7 @@ song_columns_list_format = "(50)artist artist (50)album album (10)trackno track 
 ## Note: Custom command that will be executed each time song changes. Useful for
 ## notifications etc.
 ##
-#execute_on_song_change = ""
+execute_on_song_change = $HOME/.local/bin/songinfo
 #
 ##
 ## Note: Custom command that will be executed each time player state
