@@ -11,28 +11,60 @@ ICON_ADDED=""
 ICON_UNTRACKED=""
 ICON_RENAMED=""
 ICON_DELETED=""
+ICON_STAGED="󰄲" 
+ICON_UNSTAGED="󰄱"
+ICON_BOTH="󰄫"
 
 git status --porcelain=v1 | while IFS= read -r line; do
     # Extract the two-character status code
     xy_status="${line:0:2}"
-    # Extract the file path, handling potential quoting
+    # Extract the file path
     file_path="${line:3}"
     
-    # Parse the first character (staging area status)
-    x="${xy_status:0:1}"
-    # Parse the second character (working tree status)  
-    y="${xy_status:1:1}"
+    # Parse staging area (first char) and working tree (second char)
+    x="${xy_status:0:1}"  # Staged status
+    y="${xy_status:1:1}"  # Working tree status
+    
+    # Determine staging indicator
+    staging_indicator=""
+    if [[ "$x" != " " && "$y" != " " ]]; then
+        staging_indicator="${COLOR_MAGENTA}${ICON_BOTH}${COLOR_RESET}"
+    elif [[ "$x" != " " ]]; then
+        staging_indicator="${COLOR_CYAN}${ICON_STAGED}${COLOR_RESET}"
+    elif [[ "$y" != " " ]]; then
+        staging_indicator="${COLOR_YELLOW}${ICON_UNSTAGED}${COLOR_RESET}"
+    fi
     
     case "$xy_status" in
-        "M ") echo -e "${COLOR_YELLOW}${ICON_MODIFIED} Modified:${COLOR_RESET}  ${file_path}" ;;
-        " M") echo -e "${COLOR_YELLOW}${ICON_MODIFIED} Modified:${COLOR_RESET}  ${file_path}" ;;
-        "MM") echo -e "${COLOR_YELLOW}${ICON_MODIFIED} Modified:${COLOR_RESET}  ${file_path}" ;;
-        "A ") echo -e "${COLOR_GREEN}${ICON_ADDED} Added:${COLOR_RESET}     ${file_path}" ;;
-        "AM") echo -e "${COLOR_GREEN}${ICON_ADDED} Added+Mod:${COLOR_RESET} ${file_path}" ;;
-        "??") echo -e "${COLOR_RED}${ICON_UNTRACKED} Untracked:${COLOR_RESET} ${file_path}" ;;
-        "R ") echo -e "${COLOR_BLUE}${ICON_RENAMED} Renamed:${COLOR_RESET}   ${file_path}" ;;
-        " D") echo -e "${COLOR_RED}${ICON_DELETED} Deleted:${COLOR_RESET}   ${file_path}" ;;
-        "D ") echo -e "${COLOR_RED}${ICON_DELETED} Deleted:${COLOR_RESET}   ${file_path}" ;;
-        *) echo -e "${COLOR_YELLOW}${xy_status}${COLOR_RESET} ${file_path}" ;;
+        # Staged changes (first character is the change)
+        "M ") echo -e "${staging_indicator} ${COLOR_YELLOW}${ICON_MODIFIED} Modified:${COLOR_RESET}    ${file_path}" ;;
+        "A ") echo -e "${staging_indicator} ${COLOR_GREEN}${ICON_ADDED} Added:${COLOR_RESET}       ${file_path}" ;;
+        "D ") echo -e "${staging_indicator} ${COLOR_RED}${ICON_DELETED} Deleted:${COLOR_RESET}     ${file_path}" ;;
+        "R ") echo -e "${staging_indicator} ${COLOR_BLUE}${ICON_RENAMED} Renamed:${COLOR_RESET}     ${file_path}" ;;
+        "C ") echo -e "${staging_indicator} ${COLOR_BLUE}${ICON_RENAMED} Copied:${COLOR_RESET}      ${file_path}" ;;
+        
+        # Unstaged changes (second character is the change)
+        " M") echo -e "${staging_indicator} ${COLOR_YELLOW}${ICON_MODIFIED} Modified:${COLOR_RESET}    ${file_path}" ;;
+        " D") echo -e "${staging_indicator} ${COLOR_RED}${ICON_DELETED} Deleted:${COLOR_RESET}     ${file_path}" ;;
+        
+        # Both staged and unstaged changes
+        "MM") echo -e "${staging_indicator} ${COLOR_YELLOW}${ICON_MODIFIED} Modified:${COLOR_RESET}    ${file_path}" ;;
+        "AM") echo -e "${staging_indicator} ${COLOR_GREEN}${ICON_ADDED} Added+Mod:${COLOR_RESET}   ${file_path}" ;;
+        "AD") echo -e "${staging_indicator} ${COLOR_GREEN}${ICON_ADDED} Added+Del:${COLOR_RESET}   ${file_path}" ;;
+        "MD") echo -e "${staging_indicator} ${COLOR_YELLOW}${ICON_MODIFIED} Mod+Del:${COLOR_RESET}     ${file_path}" ;;
+        
+        # Untracked files
+        "??") echo -e "${COLOR_RED}${ICON_UNTRACKED}${COLOR_RESET} ${COLOR_RED}${ICON_UNTRACKED} Untracked:${COLOR_RESET}  ${file_path}" ;;
+        
+        # Ignored files  
+        "!!") echo -e "  ${COLOR_MAGENTA}󰿠 Ignored:${COLOR_RESET}    ${file_path}" ;;
+        
+        # Conflict states
+        "UU") echo -e "${COLOR_RED}󰞇${COLOR_RESET} ${COLOR_RED}󰞇 Conflict:${COLOR_RESET}   ${file_path}" ;;
+        "AA") echo -e "${COLOR_RED}󰞇${COLOR_RESET} ${COLOR_RED}󰞇 Conflict:${COLOR_RESET}   ${file_path}" ;;
+        "DD") echo -e "${COLOR_RED}󰞇${COLOR_RESET} ${COLOR_RED}󰞇 Conflict:${COLOR_RESET}   ${file_path}" ;;
+        
+        # Fallback for any other status
+        *) echo -e "${staging_indicator} ${COLOR_YELLOW}${xy_status}${COLOR_RESET}              ${file_path}" ;;
     esac
 done
