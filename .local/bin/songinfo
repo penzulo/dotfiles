@@ -1,10 +1,59 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
+# Configuration
 music_dir="$HOME/Music"
-previewdir="$XDG_CONFIG_HOME/ncmpcpp/previews"
-filename="$(mpc --format "$music_dir"/%file% current)"
-previewname="$previewdir/$(mpc --format %album% current | base64).png"
+previewdir="${XDG_CONFIG_HOME:-$HOME/.config}/ncmpcpp/previews"
+notification_id=27072
+default_icon="audio-x-generic"
 
-[ -e "$previewname" ] || ffmpeg -y -i "$filename" -an -vf scale=128:128 "$previewname" > /dev/null 2>&1
+mkdir -p "$previewdir"
 
-notify-send -r 27072 "Now Playing" "$(mpc --format '%title% \n%artist% - %album%' current)" -i "$previewname"
+# Get current song title & file
+title=$(mpc --format '%title%' current 2>/dev/null)
+filename=$(mpc --format "$music_dir/%file%" current 2>/dev/null)
+
+# Fallback if no title
+[[ -z "$title" ]] && title=$(basename "$filename" | sed 's/\.[^.]*$//')
+
+# Function: extract album art
+extract_album_art() {
+    local audio_file="$1"
+    local output_file="$2"
+
+    # Try embedded cover
+    if ffmpeg -y -i "$audio_file" -an -c:v png \
+        -vf "scale=300:300:force_original_aspect_ratio=increase,crop=300:300" \
+        "$output_file" >/dev/null 2>&1; then
+        return 0
+    fi
+
+    # Try folder covers
+    local dir="$(dirname "$audio_file")"
+    for cover in "$dir"/{cover,folder,album,front}*.{jpg,jpeg,png,JPG,JPEG,PNG}; do
+        [[ -f "$cover" ]] || continue
+        ffmpeg -y -i "$cover" \
+            -vf "scale=300:300:force_original_aspect_ratio=increase,crop=300:300" \
+            "$output_file" >/dev/null 2>&1
+        return 0
+    done
+
+    return 1
+}
+
+# Preview image path (per-album cache)
+album_hash=$(echo -n "$filename" | base64 -w 0 | tr '/' '_')
+previewname="$previewdir/${album_hash}.png"
+
+# Extract art if not cached
+if [[ ! -f "$previewname" ]]; then
+    if ! extract_album_art "$filename" "$previewname"; then
+        previewname="$default_icon"
+    fi
+fi
+
+# Send notification: only title + image
+if command -v dunstify >/dev/null 2>&1; then
+    dunstify -r "$notification_id" -i "$previewname" "♪ Now Playing" "$title"
+else
+    notify-send -r "$notification_id" -i "$previewname" "♪ Now Playing" "$title"
+fi
