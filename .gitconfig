@@ -5,6 +5,7 @@
 
 [core]
     editor = helix
+    pager = delta
 	excludesFile = ~/.config/git/global_ignore
 
 [init]
@@ -15,6 +16,9 @@
 
 [rebase]
     autoStash = true
+
+[merge]
+    conflictStyle = zdiff3
 
 [diff]
     algorithm = patience
@@ -36,6 +40,13 @@
 
 [rerere]
     enabled = true
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true
+    dark = true
 
 # Include your work-specific config only for projects in your work directory
 [includeIf "gitdir:~/Workspace/"]
