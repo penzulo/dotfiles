@@ -1,5 +1,5 @@
 configuration {
-    modes:           [drun, recursivebrowser, emoji, calc];
+    modes:           [drun, recursivebrowser, emoji];
     font:            "JetBrainsMono Nerd Font 12";
     show-icons:      true;
     icon-theme:      "Gruvbox-Dark-Medium";

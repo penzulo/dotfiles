@@ -43,7 +43,7 @@ keys: list[Key] = [
     Key(
         [mod],
         "c",
-        lazy.spawn("rofi -show calc -modi calc -no-show-match -no-sort"),
+        lazy.spawn("qalculate-gtk"),
         desc="Launch Calculator",
     ),
     Key(
