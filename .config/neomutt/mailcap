@@ -1,3 +1,0 @@
-text/html; w3m -dump -T text/html -I UTF-8 -O UTF-8 %s; nametemplate=%s.html
-text/html; firefox %s; nametemplate=%s.html; copiousoutput
-
