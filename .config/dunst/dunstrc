@@ -36,6 +36,11 @@
     max_icon_size = 48
     scale = 0
 
+    icon_theme = "Tela-circle-dark"
+    icon_path = "/usr/share/icons/Tela-circle-dark/symbolic/"
+
+    enable_recursive_icon_lookup = true
+
     # Transparency (requires a compositor like picom)
     transparency = 10
 
@@ -43,15 +48,28 @@
     background = "#282828"
     foreground = "#ebdbb2"
     timeout = 5
+    default_icon = "dialog-information"
 
 [urgency_normal]
     background = "#282828"
     foreground = "#ebdbb2"
     frame_color = "#d79921"
     timeout = 6
+    default_icon = "dialog-error"
 
 [urgency_critical]
     background = "#282828"
     foreground = "#ebdbb2"
     frame_color = "#cc241d"
     timeout = 0
+    default_icon = "dialog-error"
+
+[music]
+    appname = "Now Playing"
+    format = "<b>%s</b>\n%b"
+    alignment = left
+    icon_position = left
+    max_icon_size = 128
+    frame_color = "#d79921"
+    timeout = 8
+
