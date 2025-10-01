@@ -1,0 +1,14 @@
+# ---- Audio Output ----
+set output_plugin=pulse
+
+# ---- Sound Quality & Normalization ----
+set replaygain=track
+set replaygain_preamp=2.0
+set replaygain_limit=true
+
+# ---- General Usability ----
+set softvol=true
+set resume=true
+set smart_artist_sort=true
+set start_view=2
+set status_display_program=cmus-notify # ~/.local/bin

@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+# Directories
+previewdir="${XDG_CONFIG_HOME:-$HOME/.config}/cmus/previews"
+mkdir -p "$previewdir"
+
+# Config
+notification_id=27072
+default_icon="audio-x-generic"
+
+# Get current info from cmus
+title=$(cmus-remote -Q | awk -F' ' '/^tag title/ {$1=$2=""; print substr($0,3)}')
+artist=$(cmus-remote -Q | awk -F' ' '/^tag artist/ {$1=$2=""; print substr($0,3)}')
+album=$(cmus-remote -Q | awk -F' ' '/^tag album/ {$1=$2=""; print substr($0,3)}')
+file=$(cmus-remote -Q | awk -F' ' '/^file/ {$1=""; print substr($0,2)}')
+
+[[ -z "$title" ]] && title=$(basename "$file" | sed 's/\.[^.]*$//')
+[[ -z "$artist" ]] && artist="Unknown Artist"
+[[ -z "$album" ]] && album="Unknown Album"
+
+# Album art cache filename
+album_hash=$(echo -n "${artist}-${album}" | base64 -w 0 | tr '/' '_')
+previewname="$previewdir/${album_hash}.png"
+
+# Function to extract album art
+extract_album_art() {
+    local audio_file="$1"
+    local output_file="$2"
+    if ffmpeg -y -i "$audio_file" -an -c:v png \
+        -vf "scale=300:300:force_original_aspect_ratio=increase,crop=300:300" \
+        "$output_file" >/dev/null 2>&1; then
+        return 0
+    fi
+    # Fallback to cover files
+    local dir="$(dirname "$audio_file")"
+    for cover in "$dir"/{cover,folder,album,front}*.{jpg,jpeg,png}; do
+        [[ -f "$cover" ]] || continue
+        ffmpeg -y -i "$cover" -vf "scale=300:300:force_original_aspect_ratio=increase,crop=300:300" "$output_file" >/dev/null 2>&1
+        return 0
+    done
+    return 1
+}
+
+# Extract album art if not cached
+if [[ ! -f "$previewname" ]]; then
+    extract_album_art "$file" "$previewname" || previewname="$default_icon"
+fi
+
+# Send notification (title only + image)
+if command -v dunstify >/dev/null 2>&1; then
+    dunstify -r "$notification_id" -i "$previewname" "♪ Now Playing" "$title"
+else
+    notify-send -r "$notification_id" -i "$previewname" "♪ Now Playing" "$title"
+fi
+
