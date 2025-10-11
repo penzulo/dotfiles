@@ -1,29 +1,22 @@
 import subprocess
 
-from libqtile import bar, widget
+from libqtile.bar import Bar
 from libqtile.config import Screen
 from libqtile.lazy import lazy
+from qtile_extras import widget
+from qtile_extras.widget.decorations import PowerLineDecoration
 
-from settings.constants import colors, powerline, pterm
-
-
-def powerline_sep(
-    prev_bg: str, next_bg: str, direction: str = "left", end: bool = False
-) -> widget.TextBox:
-    """Return a powerline separator TextBox with correct colors."""
-    chars = {
-        ("left", False): "",
-        ("left", True): "",
-        ("right", False): "",
-        ("right", True): "",
-    }
-    char = chars.get((direction, end), "")
-    return widget.TextBox(char, foreground=next_bg, background=prev_bg, **powerline)
+from settings.constants import colors, pterm
 
 
-def create_bar() -> bar.Bar:
+def create_bar() -> Bar:
     """Returns a configured bar object."""
-    return bar.Bar(
+    powerline_config = {
+        "decorations": [
+            PowerLineDecoration(path="back_slash"),
+        ]
+    }
+    return Bar(
         [
             widget.GroupBox(
                 active=colors["foreground"],
@@ -35,44 +28,36 @@ def create_bar() -> bar.Bar:
                 padding_y=4,
                 hide_unused=True,
                 background=colors["purple"],
-            ),
-            powerline_sep(
-                colors["background"], colors["purple"], direction="right", end=True
+                **powerline_config,
             ),
             widget.Spacer(),
-            powerline_sep(
-                colors["background"],
-                colors["yellow"],
-                direction="left",
-                end=True,
-            ),
             widget.Clock(
                 format="󰥔 %B %d %H:%M",
                 background=colors["yellow"],
                 mouse_callbacks={"Button1": lazy.spawn("gsimplecal")},
                 padding=10,
+                **powerline_config,
             ),
-            powerline_sep(colors["yellow"], colors["purple"]),
             widget.CheckUpdates(
                 distro="Arch_checkupdates",
                 display_format="󰏔 {updates}",
                 no_update_string="󰏔 0",
-                update_interval=1800,
+                update_interval=3600,
                 background=colors["purple"],
                 colour_have_updates=colors["foreground"],
                 colour_no_updates=colors["foreground"],
+                **powerline_config,
                 mouse_callbacks={
                     "Button1": lazy.spawn(f"{pterm} --class pacman -e sudo pacman -Syu")
                 },
             ),
-            powerline_sep(colors["purple"], colors["blue"]),
             widget.Volume(
                 fmt="󰕾 {}",
                 background=colors["blue"],
                 get_volume_command="wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2 * 100) \"%\"}'",
                 padding=8,
+                **powerline_config,
             ),
-            powerline_sep(colors["blue"], colors["aqua"]),
             widget.Wlan(
                 interface="wlan0",
                 format="󰤨  {essid}",
@@ -80,8 +65,8 @@ def create_bar() -> bar.Bar:
                 background=colors["aqua"],
                 padding=8,
                 mouse_callbacks={"Button1": lazy.spawn("iwgtk")},
+                **powerline_config,
             ),
-            powerline_sep(colors["aqua"], colors["green"]),
             widget.Battery(
                 charge_char="󰂄",
                 discharge_char="󱟞",
@@ -89,9 +74,7 @@ def create_bar() -> bar.Bar:
                 full_char="󰁹",
                 not_charging_char="󱉞",
                 unknown_char="󱟩",
-                charge_controller=lambda: (0, 90),
-                update_interval=10,
-                notify_below=20,
+                update_interval=30,
                 show_short_text=False,
                 background=colors["green"],
                 low_foreground=colors["red"],
@@ -100,9 +83,11 @@ def create_bar() -> bar.Bar:
                 mouse_callbacks={
                     "Button1": lazy.spawn(f"{pterm} --class btop -e btop")
                 },
+                **powerline_config,
             ),
-            powerline_sep(colors["green"], colors["orange"]),
-            widget.Systray(background=colors["orange"], icon_size=20, padding=6),
+            widget.Systray(
+                background=colors["orange"], icon_size=20, padding=6, **powerline_config
+            ),
         ],
         26,
         background=colors["background"],
@@ -110,23 +95,15 @@ def create_bar() -> bar.Bar:
     )
 
 
-# --- Dynamic Screen Logic ---
-# Use xrandr to get the number of connected monitors
-command: str = "xrandr --query | rg ' connected' | wc -l"
-try:
-    num_monitors = len(
-        [
-            m
-            for m in subprocess.check_output("xrandr --query", shell=True)
-            .decode()
-            .splitlines()
-            if " connected" in m
-        ]
-    )
-except (subprocess.CalledProcessError, ValueError) as e:
-    # Fallback to 1 monitor if the command fails
-    print(f"Error getting monitor count: {e}. Defaulting to 1.")
-    num_monitors: int = 1
+def get_num_monitors() -> int:
+    """Return the number of connected monitors using xrandr."""
+    try:
+        output = subprocess.check_output(["xrandr", "--query"], text=True)
+        return sum(" connected" in line for line in output.splitlines())
+    except subprocess.SubprocessError as e:
+        print(f"[Qtile] Monitor detection failed: {e}. Defaulting to 1 monitor.")
+        return 1
 
-# Create a list of Screen objects, one for each monitor
+
+num_monitors: int = get_num_monitors()
 screens: list[Screen] = [Screen(top=create_bar()) for _ in range(num_monitors)]
