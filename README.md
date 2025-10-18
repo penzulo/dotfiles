@@ -33,20 +33,19 @@ This setup is built on a stack of lightweight, configurable, and powerful tools.
 * **Compositor** → **Picom**
 * **Display Manager** → **LightDM**
 * **Shell** → **Nushell**
-* **Terminal** → **Kitty**
+* **Terminal** → **Alacritty**(main) + **Kitty**(secondary)
 
 ### 🎨 Theming & UI
 * **Color Scheme** → **Gruvbox Dark**
-* **Font** → **JetBrainsMono Nerd Font**
+* **Font** → **JetBrainsMono Nerd Font**(Terminal) + **Inter Display**(System)
 * **Application Launcher** → **Rofi**
 * **Notifications** → **Dunst**
-* **GTK & Icons** → **Orchis-Dark & Tela Circle**
+* **GTK & Icons** → **Gruvbox-Dark-Medium & Tela Circle**
 
 ### 🛠️ Key Applications
 * **Audio** → **PipeWire**
 * **File Managers** → **Yazi (CLI) + Thunar (GUI)**
 * **Password Management** → **pass**
-* **Email** → **NeoMutt**
 * **Screenshots** → **Flameshot**
 
 ---
