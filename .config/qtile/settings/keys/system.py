@@ -59,4 +59,14 @@ keys: list[Key] = [
         lazy.spawn("brightnessctl set 5%-"),
         desc="Decrease brightness",
     ),
+    # --- Bluetooth ---
+    # NOTE: Follow installation steps from https://github.com/nickclyde/rofi-bluetooth
+    # `rofi-bluetooth` is an excellent lightweight candidate
+    # for managing bluetooth connections.
+    Key(
+        [mod, "shift"],
+        "b",
+        lazy.spawn("sh -c ~/.local/bin/rofi-bluetooth"),
+        desc="Show bluetooth menu",
+    ),
 ]
