@@ -14,7 +14,7 @@ keys: list[Key] = [
         lazy.spawn("rofi -show drun -p Applications"),
         desc="Launch Rofi application launcher",
     ),
-    Key([mod], "b", lazy.spawn("firefox"), desc="Launch Firefox web browser"),
+    Key([mod], "b", lazy.spawn("brave"), desc="Launch Brave web browser"),
     Key([mod], "e", lazy.spawn("thunar"), desc="Launch Thunar file manager"),
     Key(
         [mod, "shift"],

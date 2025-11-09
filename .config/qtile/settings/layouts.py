@@ -32,5 +32,5 @@ layouts: list[Layout] = [
 
 floating_layout: Floating = Floating(
     float_rules=FLOATING_RULES,
-    **layout_theme,  # Apply the same border styling
+    **layout_theme,
 )

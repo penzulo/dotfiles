@@ -22,26 +22,21 @@ group_props: list[GroupProperties] = [
         "key": "2",
         "label": "",
         "layout": "monadtall",
-        "matches": [Match(wm_class="firefox"), Match(wm_class="firefox")],
+        "matches": [Match(wm_class=m) for m in ("brave-browser", "firefox")],
     },
     {
         "name": "SYS",
         "key": "3",
         "label": "",
         "layout": "monadtall",
-        "matches": [
-            Match(wm_class="pacman"),
-            Match(wm_class="thunar"),
-            Match(wm_class="yazi"),
-            Match(wm_class="btop"),
-        ],
+        "matches": [Match(wm_class=m) for m in ("pacman", "thunar", "yazi", "btop")],
     },
     {
         "name": "DOC",
         "key": "4",
         "label": "󰈙",
         "layout": "monadtall",
-        "matches": [Match(wm_class="neomutt"), Match(wm_class="ONLYOFFICE")],
+        "matches": [Match(wm_class="ONLYOFFICE")],
     },
     {
         "name": "MUS",
@@ -55,7 +50,7 @@ group_props: list[GroupProperties] = [
         "key": "6",
         "label": "",
         "layout": "monadtall",
-        "matches": [Match(wm_class="vlc"), Match(wm_class="mpv")],
+        "matches": [Match(wm_class=m) for m in ("mpv", "vlc")],
     },
 ]
 
@@ -68,12 +63,8 @@ for props in group_props:
     groups.append(
         Group(
             name=props["name"],
-            layout=props.get(
-                "layout", "monadtall"
-            ),  # Default to monadtall if not specified
-            label=props.get(
-                "label", props["name"]
-            ),  # Default label to name if not specified
+            layout=props.get("layout", "monadtall"),
+            label=props.get("label", props["name"]),
             matches=props.get("matches", []),
         )
     )
