@@ -2,6 +2,7 @@
 pyright = { command = "pyright-langserver", args = ["--stdio"], config = {} }
 biome = { command = "biome", args = ["lsp-proxy"] }
 vscode-json-languageserver = { command = "vscode-json-languageserver", args = ["--stdio"], config = { provideFormatter = true, json = { validate = { enable = true } } } }
+clangd = { command="clangd" }
 
 [[language]]
 name = "python"
@@ -176,3 +177,29 @@ language-servers = [
     { name = "vscode-json-languageserver", except-features = ["format"] },
     "biome",
 ]
+
+
+[[language]]
+name = "c"
+scope = "source.c"
+injection-regex = "c"
+file-types = ["c"] # WARN: ["h"] files may not be included.
+comment-token = "//"
+block-comment-tokens = { start = "/*", end = "*/" }
+indent = { tab-width = 2, unit = "  " }
+language-servers = [ "clangd" ]
+formatter = { command="clang-format", args = ["--style=file"] }
+auto-format = true
+
+[[language]]
+name = "cpp"
+scope = "source.cpp"
+injection-regex = "cpp"
+file-types = ["cc", "hh", "c++", "cpp", "hpp", "h", "ipp", "tpp", "cxx", "hxx", "ixx", "txx", "ino", "C", "H", "cu", "cuh", "cppm", "h++", "ii", "inl", { glob = ".hpp.in" }, { glob = ".h.in" }]
+comment-token = "//"
+block-comment-tokens = { start = "/*", end = "*/" }
+indent = { tab-width = 2, unit = "  " }
+language-servers = [ "clangd" ]
+formatter = { command="clang-format", args = ["--style=file"] }
+auto-format = true
+
