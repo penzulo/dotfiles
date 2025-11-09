@@ -13,11 +13,10 @@ done
 export PATH
 export EDITOR="helix"
 export VISUAL="HELIX"
-export LEDGER_FILE=~/Documents/Ledger/main.journal
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 export DOCKER_HOST="unix:///var/run/docker.sock"
-export SSH_ASKPASS="/usr/lib/openssh/ssh-askpass-fullscreen"
-export SSH_ASKPASS_REQUIRE=prefer
+export GPG_TTY=$(tty)
+export DISPLAY="Wayland"
 
 # --- Aliases ---
 alias ..='cd ..'
