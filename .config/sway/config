@@ -1,0 +1,332 @@
+# ---------------------
+# Environment Variables
+# ---------------------
+exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=sway
+
+# Enable portal support for GTK apps
+exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
+exec hash dbus-update-activation-environment 2>/dev/null && dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
+
+
+# ---------------
+# Visual Settings
+# ---------------
+
+default_border pixel 1
+default_floating_border pixel 1
+
+set $gnome_schema org.gnome.desktop.interface
+exec_always {
+  gsettings set $gnome_schema gtk-theme 'Gruvbox-Dark-Medium'
+  gsettings set $gnome_schema icon-theme 'Papirus-Dark'
+  gsettings set $gnome_schema cursor-theme 'Vimix Cursors'
+  gsettings set $gnome_schema font-name 'Inter Display 11'
+}
+
+
+# ---------
+# Variables
+# ---------
+
+set $mod Mod4
+set $terminal_primary alacritty
+set $terminal_secondary kitty
+set $gui_file_manager thunar
+set $tui_file_manager yazi
+set $launcher "wofi"
+
+# Gruvbox color palette
+set $bg #282828
+set $bg_alt #3c3836
+set $fg #ebdbb2
+set $gray #928374
+set $red #fb4934
+set $green #b8bb26
+set $yellow #fabd2f
+set $blue #83a598
+set $purple #d3869b
+set $aqua #8ec07c
+set $orange #fe8019
+
+# Window colors: <border> <background> <text> <indicator> <child_border>
+client.focused           $yellow $yellow $bg $purple $yellow
+client.focused_inactive  $gray $bg_alt $fg $gray $gray
+client.unfocused         $bg_alt $bg $gray $bg_alt $bg_alt
+client.urgent            $red $red $fg $red $red
+client.placeholder       $bg $bg $fg $bg $bg
+client.background        $bg
+
+
+# ----------------------
+# Autostart Applications
+# ----------------------
+
+exec dunst
+exec mpd
+exec udiskie --tray --notify
+exec swayidle -w \
+    timeout 300 'swaylock -f' \
+    timeout 600 'swaymsg "output * dpms off"' \
+    resume 'swaymsg "output * dpms on"' \
+    before-sleep 'swaylock -f' \
+    after-resume 'swaymsg "output * dpms on"'
+exec ~/.config/sway/scripts/random_wallpaper.sh &
+
+
+# ------------------
+# System Keybindings
+# ------------------
+
+# Config management
+bindsym $mod+Control+r reload; exec notify-send "Sway config reloaded!"
+bindsym $mod+Control+k exec $terminal_primary -e helix ~/.config/sway/config
+
+# Screenshots (using grim + slurp + satty)
+bindsym Print exec grim ~/Pictures/Screenshots/$(date +'%Y-%m-%d_%H-%M-%S.png')
+bindsym Shift+Print exec grim -g "$(slurp)" - | satty --filename - --output-filename ~/Pictures/Screenshots/$(date +'%Y-%m-%d_%H-%M-%S.png')
+
+# Lock & power
+bindsym $mod+Control+l exec swaylock
+bindsym $mod+x exec ~/.config/qtile/scripts/powermenu.sh
+
+
+# --------------
+# Media Controls
+# --------------
+
+# Media keys (MPD)
+bindsym XF86AudioPlay exec mpc toggle
+bindsym XF86AudioNext exec mpc next
+bindsym XF86AudioPrev exec mpc prev
+
+# Volume control
+bindsym XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+bindsym XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+
+# Brightness control
+bindsym XF86MonBrightnessUp exec brightnessctl set +5%
+bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+
+
+# -----------------------
+# Application Keybindings
+# -----------------------
+
+bindsym $mod+Return exec $terminal_primary
+bindsym $mod+Space exec $launcher
+bindsym $mod+b exec brave
+bindsym $mod+e exec $gui_file_manager
+bindsym $mod+Shift+e exec $terminal_secondary --class $tui_file_manager -e $tui_file_manager
+bindsym $mod+Escape exec $terminal_primary -e helix
+bindsym $mod+p exec rofi-pass
+bindsym $mod+c exec qalculate-gtk
+bindsym $mod+m exec $terminal_primary --class ncmpcpp -e ncmpcpp
+bindsym Control+Shift+Escape exec $terminal_primary --class btop -e btop
+bindsym $mod+BackSpace exec "wofi-emoji"
+
+# Networking
+bindsym $mod+Shift+n exec iwgtk
+bindsym $mod+Shift+b exec sh -c "~/.local/bin/rofi-bluetooth"
+
+
+# -----------------
+# Window Management
+# -----------------
+
+# Focus Control
+bindsym $mod+h focus left
+bindsym $mod+l focus right
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+period focus output next
+bindsym $mod+comma focus output prev
+
+# Move Windows
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+l move right
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+period move container to output next
+bindsym $mod+Shift+comma move container to output prev
+
+# Resize windows
+bindsym $mod+i resize grow width 10px
+bindsym $mod+o resize shrink width 10px
+bindsym $mod+Control+i resize grow height 10px
+bindsym $mod+Control+o resize shrink height 10px
+
+# Window State
+bindsym $mod+q kill
+bindsym $mod+f fullscreen toggle
+bindsym $mod+Shift+f floating toggle
+bindsym $mod+Tab layout toggle tabbed split
+
+# Focus Toggle
+bindsym $mod+Shift+space focus mode_toggle
+
+
+# ---------------------
+# Workspace Definitions
+# ---------------------
+
+set $ws1 "1:󰆍"
+set $ws2 "2:"
+set $ws3 "3:"
+set $ws4 "4:󰈙"
+set $ws5 "5:"
+set $ws6 "6:"
+
+
+# -------------------
+# Workspace Switching
+# -------------------
+
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+
+
+# -------------------------
+# Move Windows to Workspace
+# -------------------------
+
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+
+
+# Application Workspace Assignments
+
+# Workspace 1: DEV
+assign [app_id="helix"] $ws1
+assign [app_id="dev.zed.Zed"] $ws1
+
+# Workspace 2: WWW
+assign [app_id="brave-browser"] $ws2
+assign [app_id="firefox"] $ws2
+
+# Workspace 3: SYS
+assign [app_id="thunar"] $ws3
+assign [app_id="yazi"] $ws3
+assign [app_id="btop"] $ws3
+
+# Workspace 4: DOC
+assign [class="^ONLYOFFICE"] $ws4
+
+# Workspace 5: MUS
+assign [app_id="ncmpcpp"] $ws5
+
+# Workspace 6: VID
+assign [app_id="mpv"] $ws6
+assign [app_id="vlc"] $ws6
+
+
+# ---------------------
+# Floating Window Rules
+# ---------------------
+
+# Generic dialogs
+for_window [app_id="xdg-desktop-portal-gtk"] floating enable
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="dialog"] floating enable
+for_window [window_type="dialog"] floating enable
+for_window [title="branchdialog"] floating enable
+for_window [app_id="soffice"] floating enable
+
+# Git utilities
+for_window [class="confirmreset"] floating enable
+for_window [class="makebranch"] floating enable
+for_window [class="maketag"] floating enable
+
+# Auth & password prompts
+for_window [class="ssh-askpass"] floating enable
+for_window [app_id="pinentry-gtk"] floating enable
+
+# Tools & utilities
+for_window [app_id="qalculate-gtk"] floating enable
+for_window [app_id="org.twosheds.iwgtk"] floating enable
+
+# Custom floating terminals
+for_window [app_id="yazi-float"] floating enable
+
+# Center floating windows
+for_window [floating] move position center
+
+
+# Touchpad configuration
+input type:touchpad {
+  tap enabled
+  natural_scroll enabled
+  dwt enabled
+  accel_profile adaptive
+  pointer_accel 0.3
+  scroll_factor 0.5
+}
+
+input type:pointer {
+  accel_profile flat
+  pointer_accel 0
+}
+
+# Keyboard Configuration
+input type:keyboard {
+  xkb_layout us
+  xkb_options caps:escape
+}
+
+output eDP-1 {
+  resolution 1366x768
+  position 0,0
+  scale 1
+}
+
+output HDMI-A-1 {
+  resolution 1920x1080
+  position 1366,0
+}
+
+# --------
+# Sway Bar
+# --------
+
+bar {
+    position top
+    status_command i3status-rs ~/.config/i3status-rust/config.toml
+    
+    # Swaybar font
+    font pango:JetBrainsMono Nerd Font 11
+    
+   
+    # Gruvbox Dark Colors
+    colors {
+        background #282828
+        statusline #ebdbb2
+        separator  #928374
+        
+        # Workspace colors: border, background, text
+        focused_workspace    #d3869b #d3869b #282828
+        active_workspace     #3c3836 #3c3836 #ebdbb2
+        inactive_workspace   #282828 #282828 #928374
+        urgent_workspace     #fb4934 #fb4934 #282828
+        binding_mode         #fabd2f #fabd2f #282828
+    }
+
+    # System tray on primary output only
+    tray_output primary
+    tray_padding 2
+    
+    # Workspace buttons
+    workspace_buttons yes
+    workspace_min_width 40
+    strip_workspace_numbers yes
+    
+    # Hide workspace names when only one workspace
+    binding_mode_indicator yes
+}

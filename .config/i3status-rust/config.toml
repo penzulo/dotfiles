@@ -1,0 +1,105 @@
+[icons]
+icons = "awesome6"
+
+[theme]
+theme = "gruvbox-dark"
+
+[theme.overrides]
+idle_bg = "#282828"
+idle_fg = "#ebdbb2"
+info_bg = "#83a598"
+info_fg = "#282828"
+good_bg = "#b8bb26"
+good_fg = "#282828"
+warning_bg = "#fabd2f"
+warning_fg = "#282828"
+critical_bg = "#fb4934"
+critical_fg = "#282828"
+separator = ""
+separator_bg = "auto"
+separator_fg = "auto"
+
+# ==========================================
+# BAR BLOCKS (Left to Right)
+# ==========================================
+
+# Clock (matches your Clock widget)
+[[block]]
+block = "time"
+interval = 60
+[block.format]
+full = " $icon $timestamp.datetime(f:'%B %d %H:%M') "
+short = " $icon $timestamp.datetime(f:'%H:%M') "
+
+[[block.click]]
+button = "left"
+cmd = "gsimplecal"
+
+[[block]]
+block = "packages"
+interval = 3600
+format = " $icon $pacman "
+format_singular = " $icon $pacman "
+format_up_to_date = " $icon 0 "
+warning_updates_regex = "(linux|linux-lts|linux-zen)"
+
+[[block.click]]
+button = "left"
+cmd = "alacritty --class pacman -e sudo-rs pacman -Syu"
+
+# Volume (matches your Volume widget)
+[[block]]
+block = "sound"
+format = " $icon $volume "
+headphones_indicator = true
+[block.theme_overrides]
+idle_bg = "#83a598"
+idle_fg = "#ebdbb2"
+
+[[block.click]]
+button = "left"
+cmd = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+
+[[block.click]]
+button = "right"
+cmd = "pavucontrol"
+
+# Network (matches your Wlan widget)
+[[block]]
+block = "net"
+device = "wlan0"
+format = " $icon $ssid "
+format_alt = " $icon {$signal_strength $ssid $frequency|Wired connection} "
+inactive_format = " $icon "
+[block.theme_overrides]
+idle_bg = "#8ec07c"
+idle_fg = "#282828"
+
+[[block.click]]
+button = "left"
+cmd = "iwgtk"
+
+# Battery (matches your Battery widget)
+[[block]]
+block = "battery"
+interval = 30
+format = " $icon $percentage "
+full_format = " $icon $percentage "
+empty_format = " $icon $percentage "
+not_charging_format = " $icon $percentage"
+missing_format = ""
+
+[block.theme_overrides]
+idle_bg = "#b8bb26"
+idle_fg = "#282828"
+good_bg = "#b8bb26"
+good_fg = "#282828"
+warning_bg = "#fe8019"
+warning_fg = "#282828"
+critical_bg = "#fb4934"
+critical_fg = "#ebdbb2"
+
+[[block.click]]
+button = "left"
+cmd = "alacritty --class btop -e btop"
+
