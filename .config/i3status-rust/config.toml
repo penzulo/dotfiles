@@ -35,18 +35,6 @@ short = " $icon $timestamp.datetime(f:'%H:%M') "
 button = "left"
 cmd = "gsimplecal"
 
-[[block]]
-block = "packages"
-interval = 3600
-format = " $icon $pacman "
-format_singular = " $icon $pacman "
-format_up_to_date = " $icon 0 "
-warning_updates_regex = "(linux|linux-lts|linux-zen)"
-
-[[block.click]]
-button = "left"
-cmd = "alacritty --class pacman -e sudo-rs pacman -Syu"
-
 # Volume (matches your Volume widget)
 [[block]]
 block = "sound"

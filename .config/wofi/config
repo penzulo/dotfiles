@@ -1,7 +1,6 @@
 show=drun
 drun_display_format={name}
 insensitive=true
-sort_order=alphabetical
 no_actions=true
 width=50%
 lines=5

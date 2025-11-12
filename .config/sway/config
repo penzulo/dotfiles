@@ -1,9 +1,8 @@
 # ---------------------
 # Environment Variables
 # ---------------------
-exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=sway
 
-# Enable portal support for GTK apps
+exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=sway
 exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
 exec hash dbus-update-activation-environment 2>/dev/null && dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
 
@@ -33,7 +32,7 @@ set $terminal_primary alacritty
 set $terminal_secondary kitty
 set $gui_file_manager thunar
 set $tui_file_manager yazi
-set $launcher "wofi"
+set $launcher "wofi -O alphabetical"
 
 # Gruvbox color palette
 set $bg #282828
@@ -87,7 +86,7 @@ bindsym Shift+Print exec grim -g "$(slurp)" - | satty --filename - --output-file
 
 # Lock & power
 bindsym $mod+Control+l exec swaylock
-bindsym $mod+x exec ~/.config/qtile/scripts/powermenu.sh
+bindsym $mod+x exec ~/.local/bin/wofi-power-menu-local
 
 
 # --------------
@@ -119,7 +118,7 @@ bindsym $mod+b exec brave
 bindsym $mod+e exec $gui_file_manager
 bindsym $mod+Shift+e exec $terminal_secondary --class $tui_file_manager -e $tui_file_manager
 bindsym $mod+Escape exec $terminal_primary -e helix
-bindsym $mod+p exec rofi-pass
+bindsym $mod+p exec wofi-pass -t
 bindsym $mod+c exec qalculate-gtk
 bindsym $mod+m exec $terminal_primary --class ncmpcpp -e ncmpcpp
 bindsym Control+Shift+Escape exec $terminal_primary --class btop -e btop
@@ -127,7 +126,7 @@ bindsym $mod+BackSpace exec "wofi-emoji"
 
 # Networking
 bindsym $mod+Shift+n exec iwgtk
-bindsym $mod+Shift+b exec sh -c "~/.local/bin/rofi-bluetooth"
+bindsym $mod+Shift+b exec sh -c "~/.local/bin/wofi-bluetooth"
 
 
 # -----------------
@@ -319,8 +318,11 @@ bar {
     }
 
     # System tray on primary output only
-    tray_output primary
+    tray_output *
     tray_padding 2
+    tray_bindsym button9 ContextMenu
+    # tray_bindcode event9 ContextMenu
+    icon_theme Papirus-Dark
     
     # Workspace buttons
     workspace_buttons yes
