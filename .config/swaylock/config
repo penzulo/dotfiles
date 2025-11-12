@@ -1,0 +1,46 @@
+# ────────────────────────────────
+# Gruvbox Dark - Swaylock Config
+# ────────────────────────────────
+
+# Background
+image=/usr/share/backgrounds/Gruvbox/Mandalorian.jpg
+effect-blur=5x3
+effect-vignette=0.2:0.4
+
+# Clock
+clock
+timestr=%H:%M:%S
+font=JetBrainsMono Nerd Font
+font-size=22
+text-color=fbf1c7ff
+text-clear-color=fbf1c7ff
+text-ver-color=fbf1c7ff
+text-wrong-color=cc241dff
+
+# Indicator
+indicator
+indicator-idle-visible
+indicator-radius=100
+indicator-thickness=2
+indicator-caps-lock
+
+# Indicator Colors
+inside-color=00000080
+inside-ver-color=00000080
+inside-wrong-color=00000080
+
+ring-color=00000000
+ring-ver-color=d79921ff
+ring-wrong-color=cc241dff
+
+line-color=00000000
+separator-color=00000000
+key-hl-color=d79921ff
+bs-hl-color=d79921ff
+
+# Behavior
+fade-in=0.2
+grace=2
+grace-no-mouse
+daemonize
+

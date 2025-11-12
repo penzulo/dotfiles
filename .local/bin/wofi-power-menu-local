@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# A clean Wofi power menu for Wayland (Sway/Hyprland/etc.)
+
+set -euo pipefail
+
+# --- Configuration ----------------------------------------------------------
+DISPLAY_NAMES=("Lock" "Logout" "Power Off" "Reboot" "Suspend")
+COMMANDS=(
+  "swaylock -f"
+  "swaymsg exit"
+  "systemctl poweroff"
+  "systemctl reboot"
+  "systemctl suspend"
+)
+
+ICON_BASE="/usr/share/icons/Tela-circle-dark/scalable/apps"
+ICONS=(
+  "${ICON_BASE}/system-lock-screen.svg"
+  "${ICON_BASE}/system-log-out.svg"
+  "${ICON_BASE}/system-shutdown.svg"
+  "${ICON_BASE}/system-reboot.svg"
+  "${ICON_BASE}/system-suspend.svg"
+)
+
+# --- Menu construction ------------------------------------------------------
+menu_items=()
+for i in "${!DISPLAY_NAMES[@]}"; do
+  menu_items+=("img:${ICONS[i]}:text:${DISPLAY_NAMES[i]}")
+done
+
+# --- Display menu -----------------------------------------------------------
+choice=$(printf '%s\n' "${menu_items[@]}" | wofi -dIj)
+
+# --- Handle selection -------------------------------------------------------
+selected_name="${choice#*:text:}"
+
+for i in "${!DISPLAY_NAMES[@]}"; do
+  if [[ "${DISPLAY_NAMES[i]}" == "$selected_name" ]]; then
+    eval "${COMMANDS[i]}"
+    exit 0
+  fi
+done
+
+exit 1
