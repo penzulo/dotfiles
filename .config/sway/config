@@ -67,8 +67,7 @@ exec swayidle -w \
     timeout 300 'swaylock -f' \
     timeout 600 'swaymsg "output * dpms off"' \
     resume 'swaymsg "output * dpms on"' \
-    before-sleep 'swaylock -f' \
-    after-resume 'swaymsg "output * dpms on"'
+    before-sleep 'swaylock -f && sleep 1'
 exec ~/.config/sway/scripts/random_wallpaper.sh &
 
 
@@ -209,10 +208,9 @@ assign [app_id="dev.zed.Zed"] $ws1
 
 # Workspace 2: WWW
 assign [app_id="brave-browser"] $ws2
-assign [app_id="firefox"] $ws2
 
 # Workspace 3: SYS
-assign [app_id="thunar"] $ws3
+assign [app_id="Thunar"] $ws3
 assign [app_id="yazi"] $ws3
 assign [app_id="btop"] $ws3
 
@@ -237,7 +235,6 @@ for_window [window_role="pop-up"] floating enable
 for_window [window_role="dialog"] floating enable
 for_window [window_type="dialog"] floating enable
 for_window [title="branchdialog"] floating enable
-for_window [app_id="soffice"] floating enable
 
 # Git utilities
 for_window [class="confirmreset"] floating enable

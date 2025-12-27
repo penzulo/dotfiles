@@ -1,72 +1,87 @@
-# 🖥️ My Arch Linux Rice
+# 🖥️ My Arch Linux Rice (Wayland Edition)
 
 [![Arch Linux](https://img.shields.io/badge/OS-Arch%20Linux-%231793d1?logo=arch-linux&logoColor=white)](https://archlinux.org)
-[![Qtile](https://img.shields.io/badge/WM-Qtile-%234477AA?logo=qtile&logoColor=white)](https://qtile.org)
+[![Sway](https://img.shields.io/badge/WM-Sway-%232da44e?logo=sway&logoColor=white)](https://swaywm.org)
 [![Gruvbox](https://img.shields.io/badge/Theme-Gruvbox%20Dark-%23b57614)](https://github.com/morhetz/gruvbox)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-
-A clean, minimal and cohesive desktop setup built on **Qtile** with a **Gruvbox Dark** color scheme.  
-This configuration is tuned for a smooth workflow, minimal distractions, and consistent aesthetics.
+A clean, minimal, and keyboard-centric desktop setup built on **Sway** (Wayland).  
+This configuration focuses on performance, smooth workflows, and a cohesive **Gruvbox Dark** aesthetic.
 
 ---
 
 ## ✨ Gallery
 
-| Clean Desktop | Application Launcher (Rofi) |
+| Clean Desktop | Application Launcher (Wofi) |
 | :---: | :---: |
-| ![](Pictures/Screenshots/rice/neofetch.png) | ![](Pictures/Screenshots/rice/rofi.png) |
+| ![](Pictures/Screenshots/rice/clean.png) | ![](Pictures/Screenshots/rice/wofi.png) |
 
 | Notifications (Dunst) | Lock Screen |
 | :---: | :---: |
-| ![](Pictures/Screenshots/rice/dunst.png) | ![](Pictures/Screenshots/rice/lockscreen.png) |
+| ![](Pictures/Screenshots/rice/dunst.png) | ![](Pictures/Screenshots/rice/lock.png) |
 
 ---
 
 ## 🔧 The Stack
 
-This setup is built on a stack of lightweight, configurable, and powerful tools.
+This setup runs on a pure Wayland environment, utilizing lightweight and modern replacements for the traditional X11 stack.
 
 ### ⚙️ Core System
 * **OS** → **Arch Linux**
-* **Window Manager** → **Qtile**
-* **Compositor** → **Picom**
-* **Display Manager** → **LightDM**
+* **Compositor/WM** → **Sway**
+* **Display Manager** → **Ly** (TUI-based, extremely fast startup)
 * **Shell** → **Nushell**
-* **Terminal** → **Alacritty**(main) + **Kitty**(secondary)
+* **Terminal** → **Alacritty** (Main) + **Kitty** (Secondary)
 
 ### 🎨 Theming & UI
 * **Color Scheme** → **Gruvbox Dark**
-* **Font** → **JetBrainsMono Nerd Font**(Terminal) + **Inter Display**(System)
-* **Application Launcher** → **Rofi**
+* **Status Bar** → **swaybar** (configured with **i3status-rust**)
+* **Launcher** → **Wofi** (with custom power menu script)
 * **Notifications** → **Dunst**
-* **GTK & Icons** → **Gruvbox-Dark-Medium & Tela Circle**
+* **GTK Theme** → **Gruvbox-Dark-Medium**
+* **Icons** → **Tela-circle-dark** (Used specifically for Wofi/Menus)
 
-### 🛠️ Key Applications
+### 🛠️ Key Utilities
+* **Idle Daemon** → **swayidle** (Handles sleep/lock logic safely)
+* **Wallpaper** → **swaybg** (Managed by custom `random_wallpaper.sh` script)
+* **Screenshots** → **Grim** (capture) + **Slurp** (select) + **Satty** (annotate)
+* **Clipboard** → **wl-clipboard**
 * **Audio** → **PipeWire**
-* **File Managers** → **Yazi (CLI) + Thunar (GUI)**
-* **Password Management** → **pass**
-* **Screenshots** → **Flameshot**
 
 ---
 
-## 💡 Notes
+## 📂 Custom Scripts
 
-- Configs are modular and easy to extend.
-- Gruvbox Dark is applied universally for consistency.
-- Power menu, scratchpads, and more are integrated via Rofi and Qtile.
-- All fonts and icons are patched and themed for Nerd Font compatibility.
+### `random_wallpaper.sh`
+A custom Bash script that manages wallpaper rotation.
+- **Logic:** Shuffles images from `/usr/share/backgrounds` and rotates them every 10 minutes.
+- **Engine:** Spawns a new `swaybg` process and cleanly kills the old one to ensure seamless transitions without flickering.
+
+### Power Menu
+A Wofi-based power menu that safely handles Wayland session locking.
+- **Features:** Dynamic icon detection and race-condition-free sleep locking.
 
 ---
 
-## 📥 Installation (Optional)
+## 💡 Workflow & Keybinds
 
-> ⚠️ Not automated yet — configs are meant to be referenced manually.
+- **Super + Enter**: Open Terminal
+- **Super + Space**: Open Wofi Launcher
+- **Super + X**: Power Menu
+- **Shift + Print Screen**: Screenshot (Grim + Slurp → Satty)
+
+---
+
+## 📥 Installation
+
+> ⚠️ **Warning:** This config is for Wayland. Ensure your GPU drivers are configured for Sway.
 
 ```bash
 git clone https://github.com/penzulo/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
-# Copy configs manually or with a script
+
+# Required packages (Arch Linux):
+# sudo pacman -S sway swaybg swayidle swaylock-effects waybar i3status-rust wofi grim slurp satty ly dunst wl-clipboard
 ```
 
 ## 📝 License

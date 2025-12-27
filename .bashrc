@@ -17,6 +17,8 @@ export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 export DOCKER_HOST="unix:///var/run/docker.sock"
 export GPG_TTY=$(tty)
 export DISPLAY="Wayland"
+export PAGER="most"
+export GROFF_NO_SGR=1
 
 # --- Aliases ---
 alias ..='cd ..'

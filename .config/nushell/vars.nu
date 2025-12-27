@@ -3,3 +3,5 @@ $env.EDITOR = "helix"
 $env.DOCKER_HOST = "unix:///var/run/docker.sock"
 $env.GPG_TTY = (tty)
 $env.DISPLAY = "Wayland"
+$env.PAGER = "most"
+$env.GROFF_NO_SGR = 1

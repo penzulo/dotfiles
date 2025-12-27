@@ -1,44 +1,75 @@
-#!/usr/bin/env bash
-# A clean Wofi power menu for Wayland (Sway/Hyprland/etc.)
-
-set -euo pipefail
+#!/usr/bin/bash
 
 # --- Configuration ----------------------------------------------------------
-DISPLAY_NAMES=("Lock" "Logout" "Power Off" "Reboot" "Suspend")
-COMMANDS=(
-  "swaylock -f"
-  "swaymsg exit"
-  "systemctl poweroff"
-  "systemctl reboot"
-  "systemctl suspend"
+# Format: "Display Name|Icon Name|Command"
+# We use standard icon names (no paths) to allow for theme switching.
+MENU_DATA=(
+  "Lock|system-lock-screen|swaylock -f"
+  "Logout|system-log-out|swaymsg exit"
+  "Suspend|system-suspend|systemctl suspend"
+  "Reboot|system-reboot|systemctl reboot"
+  "Power Off|system-shutdown|systemctl poweroff"
 )
 
-ICON_BASE="/usr/share/icons/Tela-circle-dark/scalable/apps"
-ICONS=(
-  "${ICON_BASE}/system-lock-screen.svg"
-  "${ICON_BASE}/system-log-out.svg"
-  "${ICON_BASE}/system-shutdown.svg"
-  "${ICON_BASE}/system-reboot.svg"
-  "${ICON_BASE}/system-suspend.svg"
-)
+# Attempt to detect the current GTK icon theme from settings
+# Fallback to 'Tela-circle-dark' if detection fails
+CURRENT_THEME=$(grep 'gtk-icon-theme-name' "$HOME/.config/gtk-3.0/settings.ini" 2>/dev/null | cut -d= -f2 | tr -d ' ' || echo "Tela-circle-dark")
+ICON_PATH="/usr/share/icons/$CURRENT_THEME/scalable/apps"
+FALLBACK_PATH="/usr/share/icons/hicolor/scalable/apps"
 
-# --- Menu construction ------------------------------------------------------
-menu_items=()
-for i in "${!DISPLAY_NAMES[@]}"; do
-  menu_items+=("img:${ICONS[i]}:text:${DISPLAY_NAMES[i]}")
+# --- Internal Logic ---------------------------------------------------------
+declare -A COMMAND_MAP
+wofi_input=""
+
+# Helper to find icon
+get_icon_path() {
+    local name=$1
+    # Check user theme first, then fallback to hicolor
+    if [[ -f "$ICON_PATH/$name.svg" ]]; then
+        echo "$ICON_PATH/$name.svg"
+    elif [[ -f "$FALLBACK_PATH/$name.svg" ]]; then
+        echo "$FALLBACK_PATH/$name.svg"
+    else
+        echo ""
+    fi
+}
+
+# Parse the menu data once
+for entry in "${MENU_DATA[@]}"; do
+    # Split string by pipe delimiter
+    IFS='|' read -r label icon_name command <<< "$entry"
+    
+    # Map label to command
+    COMMAND_MAP["$label"]=$command
+    
+    # Resolve icon path
+    icon_file=$(get_icon_path "$icon_name")
+
+    # Only add a newline if wofi_input is not empty (i.e., not the first item)
+    if [[ -n "$wofi_input" ]]; then
+      wofi_input+="\n"
+    fi
+    
+    if [[ -n "$icon_file" ]]; then
+        wofi_input+="img:${icon_file}:text:${label}"
+    else
+        wofi_input+="text:${label}"
+    fi
 done
 
-# --- Display menu -----------------------------------------------------------
-choice=$(printf '%s\n' "${menu_items[@]}" | wofi -dIj)
+# --- Execution --------------------------------------------------------------
+# Show menu
+selected=$(echo -e "$wofi_input" | wofi -dI --prompt "Power Menu" --width 400 --sort-order=alphabetical)
 
-# --- Handle selection -------------------------------------------------------
-selected_name="${choice#*:text:}"
+# Extract the label (strip the img/text markup)
+choice="${selected##*:text:}"
 
-for i in "${!DISPLAY_NAMES[@]}"; do
-  if [[ "${DISPLAY_NAMES[i]}" == "$selected_name" ]]; then
-    eval "${COMMANDS[i]}"
-    exit 0
-  fi
-done
-
-exit 1
+# Execute safely
+if [[ -n "${COMMAND_MAP[$choice]}" ]]; then
+    # For manual suspend, we add the safety delay for swaylock-effects
+    if [[ "$choice" == "Suspend" ]]; then
+        swaylock -f && sleep 0.5 && ${COMMAND_MAP[$choice]}
+    else
+        ${COMMAND_MAP[$choice]}
+    fi
+fi
