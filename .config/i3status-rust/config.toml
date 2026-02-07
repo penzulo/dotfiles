@@ -1,23 +1,20 @@
 [icons]
-icons = "awesome6"
+icons = "material-nf"
 
 [theme]
-theme = "gruvbox-dark"
+theme = "tomorrow-night"
 
-[theme.overrides]
-idle_bg = "#282828"
-idle_fg = "#ebdbb2"
-info_bg = "#83a598"
-info_fg = "#282828"
-good_bg = "#b8bb26"
-good_fg = "#282828"
-warning_bg = "#fabd2f"
-warning_fg = "#282828"
-critical_bg = "#fb4934"
-critical_fg = "#282828"
-separator = ""
-separator_bg = "auto"
-separator_fg = "auto"
+# [theme.overrides]
+# idle_bg = "#282828"
+# idle_fg = "#ebdbb2"
+# info_bg = "#83a598"
+# info_fg = "#282828"
+# good_bg = "#b8bb26"
+# good_fg = "#282828"
+# warning_bg = "#fabd2f"
+# warning_fg = "#282828"
+# critical_bg = "#fb4934"
+# critical_fg = "#282828"
 
 # ==========================================
 # BAR BLOCKS (Left to Right)
@@ -33,13 +30,15 @@ short = " $icon $timestamp.datetime(f:'%H:%M') "
 
 [[block.click]]
 button = "left"
-cmd = "gsimplecal"
+cmd = "yad --calendar --undecorated --close-on-unfocus --fixed --no-buttons --show-weeks --title='system-calendar' --borders=0 --mouse"
 
 # Volume (matches your Volume widget)
 [[block]]
 block = "sound"
 format = " $icon $volume "
 headphones_indicator = true
+show_volume_when_muted = true
+max_vol = 100
 [block.theme_overrides]
 idle_bg = "#83a598"
 idle_fg = "#ebdbb2"
@@ -48,10 +47,6 @@ idle_fg = "#ebdbb2"
 button = "left"
 cmd = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
 
-[[block.click]]
-button = "right"
-cmd = "pavucontrol"
-
 # Network (matches your Wlan widget)
 [[block]]
 block = "net"
@@ -59,6 +54,7 @@ device = "wlan0"
 format = " $icon $ssid "
 format_alt = " $icon {$signal_strength $ssid $frequency|Wired connection} "
 inactive_format = " $icon "
+
 [block.theme_overrides]
 idle_bg = "#8ec07c"
 idle_fg = "#282828"
@@ -70,13 +66,12 @@ cmd = "iwgtk"
 # Battery (matches your Battery widget)
 [[block]]
 block = "battery"
-interval = 30
+interval = 10
 format = " $icon $percentage "
 full_format = " $icon $percentage "
 empty_format = " $icon $percentage "
 not_charging_format = " $icon $percentage"
 missing_format = ""
-
 [block.theme_overrides]
 idle_bg = "#b8bb26"
 idle_fg = "#282828"

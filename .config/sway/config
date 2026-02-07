@@ -63,12 +63,8 @@ client.background        $bg
 exec dunst
 exec mpd
 exec udiskie --tray --notify
-exec swayidle -w \
-    timeout 300 'swaylock -f' \
-    timeout 600 'swaymsg "output * dpms off"' \
-    resume 'swaymsg "output * dpms on"' \
-    before-sleep 'swaylock -f && sleep 1'
-exec ~/.config/sway/scripts/random_wallpaper.sh &
+exec swayidle -w timeout 300 'swaylock -f -c 000000' timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' before-sleep 'swaylock -f -c 000000'
+exec waypaper --restore
 
 
 # ------------------
@@ -232,8 +228,10 @@ assign [app_id="vlc"] $ws6
 # Generic dialogs
 for_window [app_id="xdg-desktop-portal-gtk"] floating enable
 for_window [window_role="pop-up"] floating enable
+for_window [window_role="bubble"] floating enable
 for_window [window_role="dialog"] floating enable
 for_window [window_type="dialog"] floating enable
+for_window [window_type="menu"] floating enable
 for_window [title="branchdialog"] floating enable
 
 # Git utilities
@@ -247,13 +245,32 @@ for_window [app_id="pinentry-gtk"] floating enable
 
 # Tools & utilities
 for_window [app_id="qalculate-gtk"] floating enable
-for_window [app_id="org.twosheds.iwgtk"] floating enable
+for_window [app_id="iwgtk"] floating enable
+for_window [app_id="org.twosheds.iwgtk"] {
+  floating enable
+  border none
+  move position cursor
+  move down 27
+}
 
 # Custom floating terminals
 for_window [app_id="yazi-float"] floating enable
 
 # Center floating windows
 for_window [floating] move position center
+
+# Force calendar to float, remove borders, and position it
+for_window [title="system-calendar"] {
+  floating enable
+  border none
+  move position cursor
+  move down 25
+}
+
+for_window [title="File Operation Progress"] {
+  floating enable
+  border none
+}
 
 
 # Touchpad configuration
@@ -315,9 +332,9 @@ bar {
     }
 
     # System tray on primary output only
-    tray_output *
-    tray_padding 2
-    tray_bindsym button9 ContextMenu
+    # tray_output *
+    # tray_padding 2
+    # tray_bindsym button9 ContextMenu
     # tray_bindcode event9 ContextMenu
     icon_theme Papirus-Dark
     

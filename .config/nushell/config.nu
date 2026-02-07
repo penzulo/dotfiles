@@ -24,9 +24,9 @@ $env.config = {
 # ================================
 # |     Path Manipulation        |
 # ================================
-path add $"($nu.home-path)/.bun/bin"
-path add $"($nu.home-path)/.cargo/bin"
-path add $"($nu.home-path)/.local/bin"
+path add $"($nu.home-dir)/.bun/bin"
+path add $"($nu.home-dir)/.cargo/bin"
+path add $"($nu.home-dir)/.local/bin"
 
 
 # ================================
