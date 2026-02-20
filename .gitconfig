@@ -1,10 +1,10 @@
 [user]
     name = penzulo
     email = bhardesh2005@gmail.com
-	signingKey = 18055DDD2480CA49
+	signingKey = 3FBB03DE439843A7
 
 [core]
-    editor = helix
+    editor = hx
     pager = delta
 	excludesFile = ~/.config/git/global_ignore
 

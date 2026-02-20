@@ -11,12 +11,11 @@ for path in "${custom_paths[@]}"; do
 done
 
 export PATH
-export EDITOR="helix"
-export VISUAL="HELIX"
+export EDITOR="hx"
+# export VISUAL="HELIX"
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 export DOCKER_HOST="unix:///var/run/docker.sock"
 export GPG_TTY=$(tty)
-export DISPLAY="Wayland"
 export PAGER="most"
 export GROFF_NO_SGR=1
 
@@ -43,7 +42,7 @@ alias dot='git --git-dir "$HOME/.dotfiles" --work-tree $HOME'
 # Editors
 alias vi=nvim
 alias vim=nvim
-alias hx=helix
+# alias hx=helix not needed on debian
 
 # Zellij
 alias zj=zellij

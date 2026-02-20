@@ -12,7 +12,7 @@ alias gl = git pull
 # -- Editors --
 alias vi = nvim
 alias vim = nvim
-alias hx = helix
+# alias hx = helix not needed on debian
 
 # -- Zellij --
 alias zj = zellij
