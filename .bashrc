@@ -15,7 +15,7 @@ export EDITOR="hx"
 # export VISUAL="HELIX"
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 export DOCKER_HOST="unix:///var/run/docker.sock"
-export GPG_TTY=$(tty)
+# export GPG_TTY=$(tty)
 export PAGER="most"
 export GROFF_NO_SGR=1
 
