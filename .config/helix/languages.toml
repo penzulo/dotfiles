@@ -3,6 +3,8 @@ pyright = { command = "pyright-langserver", args = ["--stdio"], config = {} }
 biome = { command = "biome", args = ["lsp-proxy"] }
 vscode-json-languageserver = { command = "vscode-json-languageserver", args = ["--stdio"], config = { provideFormatter = true, json = { validate = { enable = true } } } }
 clangd = { command="clangd" }
+marksman = { command = "marksman", args = ["server"] }
+
 
 [[language]]
 name = "python"
@@ -203,3 +205,23 @@ language-servers = [ "clangd" ]
 formatter = { command="clang-format", args = ["--style=file"] }
 auto-format = true
 
+[[language]]
+name = "markdown"
+scope = "source.md"
+injection-regex = "md|markdown"
+file-types = ["md", "livemd", "markdown", "mdx", "mkd", "mkdn", "mdwn", "mdown", "markdn", "mdtxt", "mdtext", "workbook", { glob = "PULLREQ_EDITMSG" }]
+roots = [".marksman.toml"]
+language-servers = [ "marksman", "markdown-oxide", "rumdl" ]
+indent = { tab-width = 2, unit = "  " }
+block-comment-tokens = { start = "<!--", end = "-->" }
+
+[language.auto-pairs]
+'(' = ')'
+'{' = '}'
+'[' = ']'
+'"' = '"'
+"'" = "'"
+'`' = '`'
+'‘' = '’'
+'«' = '»'
+'“' = '”'
