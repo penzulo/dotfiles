@@ -5,6 +5,14 @@ line-number = "relative"
 cursorline = true
 mouse = true
 
+[editor.auto-pairs]
+'(' = ')'
+'{' = '}'
+'[' = ']'
+'<' = '>'
+'"' = '"'
+'`' = '`'
+
 [editor.lsp]
 display-messages = true
 display-inlay-hints = false
@@ -19,4 +27,9 @@ render = true
 character = "."
 
 [keys.normal]
-C-g = ":run-shell-command ~/.config/helix/scripts/yazi-chooser.sh"
+A-g = ":run-shell-command ~/.config/helix/scripts/yazi-chooser.sh"
+A-q = ":buffer-close"
+A-w = ":write"
+C-n = ":new"
+C-r = ":config-reload"
+

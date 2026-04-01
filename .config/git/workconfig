@@ -1,3 +1,8 @@
+[user]
+	name = penzulo
+	email = elevatedprocurementsolutions@gmail.com
+	signingKey = 3D2F65CA6439C818
+
 [push]
 	default = current
 	followTags = true
