@@ -37,3 +37,14 @@ def fcopy [source: path, destdir: path] {
 
     curl -o $dst $"file://($src)"
 }
+
+# Pacman packages cleanup
+def cleanup-packages [] {
+  let packages = (pacman -Qdtq | lines)
+
+  if ($packages | is-empty) {
+    print "No orphaned packages found."
+  } else {
+    sudo pacman  -Rcns ...$packages    
+  }
+}

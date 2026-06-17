@@ -13,7 +13,7 @@ MENU_DATA=(
 
 # Attempt to detect the current GTK icon theme from settings
 # Fallback to 'Tela-circle-dark' if detection fails
-CURRENT_THEME=$(grep 'gtk-icon-theme-name' "$HOME/.config/gtk-3.0/settings.ini" 2>/dev/null | cut -d= -f2 | tr -d ' ' || echo "Tela-circle-dark")
+CURRENT_THEME=$(grep 'gtk-icon-theme-name' "$HOME/.config/gtk-3.0/settings.ini" 2>/dev/null | cut -d= -f2 | tr -d ' ' || echo "Tela-circle-purple")
 ICON_PATH="/usr/share/icons/$CURRENT_THEME/scalable/apps"
 FALLBACK_PATH="/usr/share/icons/hicolor/scalable/apps"
 

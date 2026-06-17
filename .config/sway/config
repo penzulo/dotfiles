@@ -16,9 +16,11 @@ default_floating_border pixel 1
 
 set $gnome_schema org.gnome.desktop.interface
 exec_always {
-  gsettings set $gnome_schema gtk-theme 'Gruvbox-Dark-Medium'
-  gsettings set $gnome_schema icon-theme 'Papirus-Dark'
-  gsettings set $gnome_schema cursor-theme 'Vimix Cursors'
+  gsettings set $gnome_schema gtk-theme 'WhiteSur-Dark'
+  gsettings set $gnome_schema icon-theme 'Tela-circle-purple'
+  seat seat0 xcursor_theme Bibata-Modern-Ice-Right 24
+  gsettings set $gnome_schema cursor-theme 'Bibata-Modern-Ice'
+  gsettings set $gnome_schema cursor-size 24
   gsettings set $gnome_schema font-name 'Inter Display 11'
 }
 
@@ -61,10 +63,10 @@ client.background        $bg
 # ----------------------
 
 exec dunst
-exec mpd
+# exec mpd
 exec udiskie --tray --notify
 exec swayidle -w timeout 300 'swaylock -f -c 000000' timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' before-sleep 'swaylock -f -c 000000'
-exec waypaper --restore
+exec /home/penzulo/.local/bin/waypaper --restore
 
 
 # ------------------
@@ -113,7 +115,7 @@ bindsym $mod+b exec brave
 bindsym $mod+e exec $gui_file_manager
 bindsym $mod+Shift+e exec $terminal_secondary --class $tui_file_manager -e $tui_file_manager
 bindsym $mod+Escape exec $terminal_primary -e helix
-bindsym $mod+p exec wofi-pass -t
+bindsym $mod+p exec ~/.local/bin/wofi-pass -t
 bindsym $mod+c exec qalculate-gtk
 bindsym $mod+m exec $terminal_primary --class ncmpcpp -e ncmpcpp
 bindsym Control+Shift+Escape exec $terminal_primary --class btop -e btop
@@ -206,7 +208,7 @@ assign [app_id="dev.zed.Zed"] $ws1
 assign [app_id="brave-browser"] $ws2
 
 # Workspace 3: SYS
-assign [app_id="Thunar"] $ws3
+assign [app_id="thunar"] $ws3
 assign [app_id="yazi"] $ws3
 assign [app_id="btop"] $ws3
 

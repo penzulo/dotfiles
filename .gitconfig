@@ -4,7 +4,7 @@
 	signingKey = 3FBB03DE439843A7
 
 [core]
-    editor = hx
+    editor = helix
     pager = delta
 	excludesFile = ~/.config/git/global_ignore
 
@@ -28,7 +28,7 @@
     template = ~/.config/git/gitmessage
 
 [alias]
-    s = !~/.local/bin/git-pretty-status
+    s = !"/home/penzulo/.bun/bin/git-status --format json | jq"
     co = checkout
     br = branch
     ci = commit

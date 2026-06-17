@@ -9,7 +9,7 @@ mouse = true
 '(' = ')'
 '{' = '}'
 '[' = ']'
-'<' = '>'
+# '<' = '>'
 '"' = '"'
 '`' = '`'
 
@@ -27,7 +27,7 @@ render = true
 character = "."
 
 [keys.normal]
-A-g = ":run-shell-command ~/.config/helix/scripts/yazi-chooser.sh"
+A-g = ":sh ~/.config/helix/scripts/yazi-chooser.sh"
 A-q = ":buffer-close"
 A-w = ":write"
 C-n = ":new"

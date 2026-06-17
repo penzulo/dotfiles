@@ -1,5 +1,5 @@
 [language-server]
-pyright = { command = "pyright-langserver", args = ["--stdio"], config = {} }
+# basedpyright = { command = "basedpyright-langserver", args = ["--stdio"], config = {} }
 biome = { command = "biome", args = ["lsp-proxy"] }
 vscode-json-languageserver = { command = "vscode-json-languageserver", args = ["--stdio"], config = { provideFormatter = true, json = { validate = { enable = true } } } }
 clangd = { command="clangd" }
@@ -25,7 +25,7 @@ roots = [
 ]
 comment-token = "#"
 language-servers = [
-    "pyright",
+    "ty",
     "ruff",
 ]
 auto-format = true

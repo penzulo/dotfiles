@@ -11,8 +11,8 @@ for path in "${custom_paths[@]}"; do
 done
 
 export PATH
-export EDITOR="hx"
-# export VISUAL="HELIX"
+export EDITOR="helix"
+export VISUAL="HELIX"
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 export DOCKER_HOST="unix:///var/run/docker.sock"
 # export GPG_TTY=$(tty)
