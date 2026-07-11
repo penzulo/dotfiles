@@ -1,75 +1,34 @@
 #!/usr/bin/bash
 
 # --- Configuration ----------------------------------------------------------
-# Format: "Display Name|Icon Name|Command"
-# We use standard icon names (no paths) to allow for theme switching.
+# Format: "Display Name|Command"
 MENU_DATA=(
-  "Lock|system-lock-screen|swaylock -f"
-  "Logout|system-log-out|swaymsg exit"
-  "Suspend|system-suspend|systemctl suspend"
-  "Reboot|system-reboot|systemctl reboot"
-  "Power Off|system-shutdown|systemctl poweroff"
+  "Lock|swaylock -f"
+  "Logout|swaymsg exit"
+  "Suspend|swaylock -f && sleep 0.5 && systemctl suspend"
+  "Reboot|systemctl reboot"
+  "Power Off|systemctl poweroff"
 )
-
-# Attempt to detect the current GTK icon theme from settings
-# Fallback to 'Tela-circle-dark' if detection fails
-CURRENT_THEME=$(grep 'gtk-icon-theme-name' "$HOME/.config/gtk-3.0/settings.ini" 2>/dev/null | cut -d= -f2 | tr -d ' ' || echo "Tela-circle-purple")
-ICON_PATH="/usr/share/icons/$CURRENT_THEME/scalable/apps"
-FALLBACK_PATH="/usr/share/icons/hicolor/scalable/apps"
 
 # --- Internal Logic ---------------------------------------------------------
 declare -A COMMAND_MAP
-wofi_input=""
+labels=()
 
-# Helper to find icon
-get_icon_path() {
-    local name=$1
-    # Check user theme first, then fallback to hicolor
-    if [[ -f "$ICON_PATH/$name.svg" ]]; then
-        echo "$ICON_PATH/$name.svg"
-    elif [[ -f "$FALLBACK_PATH/$name.svg" ]]; then
-        echo "$FALLBACK_PATH/$name.svg"
-    else
-        echo ""
-    fi
-}
-
-# Parse the menu data once
 for entry in "${MENU_DATA[@]}"; do
-    # Split string by pipe delimiter
-    IFS='|' read -r label icon_name command <<< "$entry"
-    
-    # Map label to command
-    COMMAND_MAP["$label"]=$command
-    
-    # Resolve icon path
-    icon_file=$(get_icon_path "$icon_name")
-
-    # Only add a newline if wofi_input is not empty (i.e., not the first item)
-    if [[ -n "$wofi_input" ]]; then
-      wofi_input+="\n"
-    fi
-    
-    if [[ -n "$icon_file" ]]; then
-        wofi_input+="img:${icon_file}:text:${label}"
-    else
-        wofi_input+="text:${label}"
-    fi
+    IFS='|' read -r label command <<< "$entry"
+    COMMAND_MAP["$label"]="$command"
+    labels+=("$label")
 done
 
 # --- Execution --------------------------------------------------------------
-# Show menu
-selected=$(echo -e "$wofi_input" | wofi -dI --prompt "Power Menu" --width 400 --sort-order=alphabetical)
+choice=$(printf '%s\n' "${labels[@]}" | wofi -d --prompt "Power Menu" --width 400 --sort-order=alphabetical)
 
-# Extract the label (strip the img/text markup)
-choice="${selected##*:text:}"
+# Exit cleanly if nothing was selected (e.g. user pressed Escape)
+if [[ -z "$choice" ]]; then
+    exit 0
+fi
 
-# Execute safely
+# Execute the matching command, if any
 if [[ -n "${COMMAND_MAP[$choice]}" ]]; then
-    # For manual suspend, we add the safety delay for swaylock-effects
-    if [[ "$choice" == "Suspend" ]]; then
-        swaylock -f && sleep 0.5 && ${COMMAND_MAP[$choice]}
-    else
-        ${COMMAND_MAP[$choice]}
-    fi
+    bash -c "${COMMAND_MAP[$choice]}"
 fi

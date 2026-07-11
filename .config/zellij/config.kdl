@@ -264,7 +264,7 @@ plugins {
 }
 
 
-theme "gruvbox-dark"
+theme "tokyo-night-dark"
 pane_frames false
 tab_bar false
 status false

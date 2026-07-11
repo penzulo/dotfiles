@@ -1,7 +1,5 @@
 [general]
-import = [
-  "~/.config/alacritty/gruvbox_dark.toml"
-]
+import = ["~/.config/alacritty/tokyo-night.toml"]
 
 # ==========================================
 # Font Configuration
@@ -17,4 +15,4 @@ style = { shape = "Block", blinking = "On" }
 
 [window]
 decorations = "full"
-opacity = 1
+opacity = 0.8

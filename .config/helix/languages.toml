@@ -1,50 +1,107 @@
-[language-server]
-# basedpyright = { command = "basedpyright-langserver", args = ["--stdio"], config = {} }
-biome = { command = "biome", args = ["lsp-proxy"] }
-vscode-json-languageserver = { command = "vscode-json-languageserver", args = ["--stdio"], config = { provideFormatter = true, json = { validate = { enable = true } } } }
-clangd = { command="clangd" }
-marksman = { command = "marksman", args = ["server"] }
-ty = { command = "ty", args = ["server"] }
-vtsls = { command = "vtsls", args = ["--stdio"], config = { typescript = { tsserver = { maxTsServerMemory = 8192, logVerbosity = "off" }, preferences = { includePackageJsonAutoImports = "auto", preferTypeOnlyAutoImports = true }, suggest = { autoImports = true }, inlayHints = { parameterNames.enabled = "none", variableTypes.enabled = false, returnTypes.enabled = false }, experimental = { enableProjectDiagnostics = false } } } }
+#:schema https://penzulo.dev/schemas/helix-languages.json
+
+[language-server.biome]
+command = "biome"
+args = ["lsp-proxy"]
+
+[language-server.clangd]
+command = "clangd"
+
+[language-server.marksman]
+command = "marksman"
+args = ["server"]
+
+[language-server.ty]
+command = "ty"
+args = ["server"]
+
+[language-server.vtsls]
+command = "vtsls"
+args = ["--stdio"]
+
+[language-server.vtsls.config.typescript.tsserver]
+maxTsServerMemory = 8_192
+logVerbosity = "off"
+
+[language-server.vtsls.config.typescript.preferences]
+includePackageJsonAutoImports = "auto"
+preferTypeOnlyAutoImports = true
+
+[language-server.vtsls.config.typescript.suggest]
+autoImports = true
+
+[language-server.vtsls.config.typescript.inlayHints.parameterNames]
+enabled = "none"
+
+[language-server.vtsls.config.typescript.inlayHints.variableTypes]
+enabled = false
+
+[language-server.vtsls.config.typescript.inlayHints.returnTypes]
+enabled = false
+
+[language-server.vtsls.config.typescript.experimental]
+enableProjectDiagnostics = false
+
+[language-server.vscode-json-languageserver]
+command = "vscode-json-languageserver"
+args = ["--stdio"]
+
+[language-server.vscode-json-languageserver.config]
+provideFormatter = true
+
+[language-server.vscode-json-languageserver.config.json.validate]
+enable = true
+
+[[language-server.vscode-json-languageserver.config.json.schemas]]
+fileMatch = ["package.json"]
+url = "https://json.schemastore.org/package.json"
+
+[[language-server.vscode-json-languageserver.config.json.schemas]]
+fileMatch = ["tsconfig.json", "tsconfig.*.json"]
+url = "https://json.schemastore.org/tsconfig.json"
+
+[[language-server.vscode-json-languageserver.config.json.schemas]]
+fileMatch = ["turbo.json"]
+url = "https://turbo.build/schema.json"
 
 [[language]]
 name = "python"
 scope = "source.python"
 injection-regex = "py(thon)?"
 shebangs = [
-    "python",
-    "uv",
+  "python",
+  "uv",
 ]
 roots = [
-    "pyproject.toml",
-    "setup.py",
-    "uv.lock",
-    "poetry.lock",
-    "pyrightconfig.json",
-    "requirements.txt",
+  "pyproject.toml",
+  "setup.py",
+  "uv.lock",
+  "poetry.lock",
+  "pyrightconfig.json",
+  "requirements.txt",
 ]
 comment-token = "#"
 language-servers = [
-    "ty",
-    "ruff",
+  "ty",
+  "ruff",
 ]
 auto-format = true
 file-types = [
-    "py",
-    "pyi",
-    "py3",
-    "pyw",
-    "ptl",
-    "rpy",
-    "cpy",
-    "ipy",
-    "pyt",
-    { glob = ".python_history" },
-    { glob = ".pythonstartup" },
-    { glob = ".pythonrc" },
-    { glob = "*SConstruct" },
-    { glob = "*SConscript" },
-    { glob = "*sconstruct" },
+  "py",
+  "pyi",
+  "py3",
+  "pyw",
+  "ptl",
+  "rpy",
+  "cpy",
+  "ipy",
+  "pyt",
+  { glob = ".python_history" },
+  { glob = ".pythonstartup" },
+  { glob = ".pythonrc" },
+  { glob = "*SConstruct" },
+  { glob = "*SConscript" },
+  { glob = "*sconstruct" },
 ]
 
 [language.indent]
@@ -53,26 +110,31 @@ unit = "    "
 
 [language.formatter]
 command = "ruff"
-args = [
-    "format",
-    "--stdin-filename",
-    "{buffer_path}"
-]
+args = ["format", "--stdin-filename", "{buffer_path}"]
 
 [[language]]
 name = "javascript"
 scope = "source.js"
 injection-regex = "(js|javascript)"
 language-id = "javascript"
-file-types = ["js", "mjs", "cjs", "rules", "es6", "pac", { glob = ".node_repl_history" }, { glob = "jakefile" }]
+file-types = [
+  "js",
+  "mjs",
+  "cjs",
+  "rules",
+  "es6",
+  "pac",
+  { glob = ".node_repl_history" },
+  { glob = "jakefile" }
+]
 shebangs = ["node"]
-roots = [ "package.json", "jsconfig.json" ]
+roots = ["package.json", "jsconfig.json"]
 comment-token = "//"
 block-comment-tokens = { start = "/*", end = "*/" }
 auto-format = true
 language-servers = [
-    { name = "vtsls", except-features = ["format"] },
-    "biome",
+  { name = "vtsls", except-features = ["format"] },
+  "biome",
 ]
 
 [[language]]
@@ -87,8 +149,8 @@ comment-token = "//"
 block-comment-tokens = { start = "/*", end = "*/" }
 auto-format = true
 language-servers = [
-    { name = "vtsls", except-features = ["format"] },
-    "biome",
+  { name = "vtsls", except-features = ["format"] },
+  "biome",
 ]
 
 [[language]]
@@ -96,14 +158,14 @@ name = "tsx"
 scope = "source.tsx"
 injection-regex = "(tsx)"
 language-id = "typescriptreact"
-file-types=["tsx"]
+file-types = ["tsx"]
 roots = ["package.json", "tsconfig.json"]
 comment-token = "//"
 block-comment-tokens = { start = "/*", end = "*/" }
 auto-format = true
 language-servers = [
-    { name = "vtsls", except-features = ["format"] },
-    "biome",
+  { name = "vtsls", except-features = ["format"] },
+  "biome",
 ]
 
 [[language]]
@@ -111,14 +173,14 @@ name = "jsx"
 scope = "source.jsx"
 injection-regex = "jsx"
 language-id = "javascriptreact"
-file-types=["jsx"]
+file-types = ["jsx"]
 roots = ["package.json", "jsconfig.json"]
 comment-token = "//"
 block-comment-tokens = { start = "/*", end = "*/" }
 auto-format = true
 language-servers = [
-    { name = "vtsls", except-features = ["format"] },
-    "biome",
+  { name = "vtsls", except-features = ["format"] },
+  "biome",
 ]
 
 [[language]]
@@ -163,8 +225,8 @@ file-types = [
 ]
 auto-format = true
 language-servers = [
-    { name = "vscode-json-languageserver", except-features = ["format"] },
-    "biome",
+  { name = "vscode-json-languageserver", except-features = ["format"] },
+  "biome",
 ]
 
 [[language]]
@@ -177,53 +239,95 @@ block-comment-tokens = { start = "/*", end = "*/" }
 grammar = "json"
 auto-format = true
 language-servers = [
-    { name = "vscode-json-languageserver", except-features = ["format"] },
-    "biome",
+  { name = "vscode-json-languageserver", except-features = ["format"] },
+  "biome",
 ]
-
 
 [[language]]
 name = "c"
 scope = "source.c"
 injection-regex = "c"
-file-types = ["c"] # WARN: ["h"] files may not be included.
+file-types = ["c"]  # WARN: ["h"] files may not be included.
 comment-token = "//"
 block-comment-tokens = { start = "/*", end = "*/" }
 indent = { tab-width = 2, unit = "  " }
-language-servers = [ "clangd" ]
-formatter = { command="clang-format", args = ["--style=file"] }
+language-servers = ["clangd"]
+formatter = { command = "clang-format", args = ["--style=file"] }
 auto-format = true
 
 [[language]]
 name = "cpp"
 scope = "source.cpp"
 injection-regex = "cpp"
-file-types = ["cc", "hh", "c++", "cpp", "hpp", "h", "ipp", "tpp", "cxx", "hxx", "ixx", "txx", "ino", "C", "H", "cu", "cuh", "cppm", "h++", "ii", "inl", { glob = ".hpp.in" }, { glob = ".h.in" }]
+file-types = [
+  "cc",
+  "hh",
+  "c++",
+  "cpp",
+  "hpp",
+  "h",
+  "ipp",
+  "tpp",
+  "cxx",
+  "hxx",
+  "ixx",
+  "txx",
+  "ino",
+  "C",
+  "H",
+  "cu",
+  "cuh",
+  "cppm",
+  "h++",
+  "ii",
+  "inl",
+  { glob = ".hpp.in" },
+  { glob = ".h.in" }
+]
 comment-token = "//"
 block-comment-tokens = { start = "/*", end = "*/" }
 indent = { tab-width = 2, unit = "  " }
-language-servers = [ "clangd" ]
-formatter = { command="clang-format", args = ["--style=file"] }
+language-servers = ["clangd"]
+formatter = { command = "clang-format", args = ["--style=file"] }
 auto-format = true
 
 [[language]]
 name = "markdown"
 scope = "source.md"
 injection-regex = "md|markdown"
-file-types = ["md", "livemd", "markdown", "mdx", "mkd", "mkdn", "mdwn", "mdown", "markdn", "mdtxt", "mdtext", "workbook", { glob = "PULLREQ_EDITMSG" }]
+file-types = [
+  "md",
+  "livemd",
+  "markdown",
+  "mdx",
+  "mkd",
+  "mkdn",
+  "mdwn",
+  "mdown",
+  "markdn",
+  "mdtxt",
+  "mdtext",
+  "workbook",
+  { glob = "PULLREQ_EDITMSG" }
+]
 roots = [".marksman.toml"]
-language-servers = [ "marksman", "markdown-oxide", "rumdl" ]
+language-servers = ["marksman", "markdown-oxide", "rumdl"]
 indent = { tab-width = 2, unit = "  " }
 block-comment-tokens = { start = "<!--", end = "-->" }
 
+[[language]]
+name = "toml"
+auto-format = true
+language-servers = ["tombi"]
+
 [language.auto-pairs]
-'(' = ')'
-'{' = '}'
-'[' = ']'
-'<' = '>'
+"(" = ")"
+"{" = "}"
+"[" = "]"
+"<" = ">"
 '"' = '"'
 "'" = "'"
-'`' = '`'
-'‘' = '’'
-'«' = '»'
-'“' = '”'
+"`" = "`"
+"‘" = "’"
+"«" = "»"
+"“" = "”"
