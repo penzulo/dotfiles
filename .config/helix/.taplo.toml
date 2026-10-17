@@ -1,0 +1,3 @@
+[[schema]]
+path = "https://penzulo.dev/schemas/helix-languages.json"
+include = ["languages.toml"]

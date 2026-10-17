@@ -7,6 +7,9 @@ args = ["lsp-proxy"]
 [language-server.clangd]
 command = "clangd"
 
+[language-server.clangd.config]
+fallbackFlags = ["-std=c++23"]
+
 [language-server.marksman]
 command = "marksman"
 args = ["server"]
@@ -117,16 +120,7 @@ name = "javascript"
 scope = "source.js"
 injection-regex = "(js|javascript)"
 language-id = "javascript"
-file-types = [
-  "js",
-  "mjs",
-  "cjs",
-  "rules",
-  "es6",
-  "pac",
-  { glob = ".node_repl_history" },
-  { glob = "jakefile" }
-]
+file-types = ["js", "mjs", "cjs", "rules", "es6", "pac", { glob = ".node_repl_history" }, { glob = "jakefile" }]
 shebangs = ["node"]
 roots = ["package.json", "jsconfig.json"]
 comment-token = "//"
@@ -187,42 +181,7 @@ language-servers = [
 name = "json"
 scope = "source.json"
 injection-regex = "json"
-file-types = [
-  "json",
-  "arb",
-  "ipynb",
-  "geojson",
-  "gltf",
-  "webmanifest",
-  { glob = "flake.lock" },
-  { glob = ".babelrc" },
-  { glob = ".bowerrc" },
-  { glob = ".jscrc" },
-  "js.map",
-  "ts.map",
-  "css.map",
-  { glob = ".jslintrc" },
-  "jsonl",
-  { glob = ".vuerc" },
-  { glob = "composer.lock" },
-  { glob = ".watchmanconfig" },
-  "avsc",
-  "ldtk",
-  "ldtkl",
-  { glob = ".swift-format" },
-  "sublime-build",
-  "sublime-color-scheme",
-  "sublime-commands",
-  "sublime-completions",
-  "sublime-keymap",
-  "sublime-macro",
-  "sublime-menu",
-  "sublime-mousemap",
-  "sublime-project",
-  "sublime-settings",
-  "sublime-theme",
-  "sublime-workspace"
-]
+file-types = ["json", "arb", "ipynb", "geojson", "gltf", "webmanifest", { glob = "flake.lock" }, { glob = ".babelrc" }, { glob = ".bowerrc" }, { glob = ".jscrc" }, "js.map", "ts.map", "css.map", { glob = ".jslintrc" }, "jsonl", { glob = ".vuerc" }, { glob = "composer.lock" }, { glob = ".watchmanconfig" }, "avsc", "ldtk", "ldtkl", { glob = ".swift-format" }, "sublime-build", "sublime-color-scheme", "sublime-commands", "sublime-completions", "sublime-keymap", "sublime-macro", "sublime-menu", "sublime-mousemap", "sublime-project", "sublime-settings", "sublime-theme", "sublime-workspace"]
 auto-format = true
 language-servers = [
   { name = "vscode-json-languageserver", except-features = ["format"] },
@@ -259,31 +218,7 @@ auto-format = true
 name = "cpp"
 scope = "source.cpp"
 injection-regex = "cpp"
-file-types = [
-  "cc",
-  "hh",
-  "c++",
-  "cpp",
-  "hpp",
-  "h",
-  "ipp",
-  "tpp",
-  "cxx",
-  "hxx",
-  "ixx",
-  "txx",
-  "ino",
-  "C",
-  "H",
-  "cu",
-  "cuh",
-  "cppm",
-  "h++",
-  "ii",
-  "inl",
-  { glob = ".hpp.in" },
-  { glob = ".h.in" }
-]
+file-types = ["cc", "hh", "c++", "cpp", "hpp", "h", "ipp", "tpp", "cxx", "hxx", "ixx", "txx", "ino", "C", "H", "cu", "cuh", "cppm", "h++", "ii", "inl", { glob = ".hpp.in" }, { glob = ".h.in" }]
 comment-token = "//"
 block-comment-tokens = { start = "/*", end = "*/" }
 indent = { tab-width = 2, unit = "  " }
@@ -295,21 +230,7 @@ auto-format = true
 name = "markdown"
 scope = "source.md"
 injection-regex = "md|markdown"
-file-types = [
-  "md",
-  "livemd",
-  "markdown",
-  "mdx",
-  "mkd",
-  "mkdn",
-  "mdwn",
-  "mdown",
-  "markdn",
-  "mdtxt",
-  "mdtext",
-  "workbook",
-  { glob = "PULLREQ_EDITMSG" }
-]
+file-types = ["md", "livemd", "markdown", "mdx", "mkd", "mkdn", "mdwn", "mdown", "markdn", "mdtxt", "mdtext", "workbook", { glob = "PULLREQ_EDITMSG" }]
 roots = [".marksman.toml"]
 language-servers = ["marksman", "markdown-oxide", "rumdl"]
 indent = { tab-width = 2, unit = "  " }
@@ -331,3 +252,6 @@ language-servers = ["tombi"]
 "‘" = "’"
 "«" = "»"
 "“" = "”"
+
+[[language]]
+name = "cpp"

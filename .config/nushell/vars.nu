@@ -6,3 +6,4 @@ $env.DOCKER_HOST = "unix:///var/run/docker.sock"
 # $env.DISPLAY = "Wayland"
 $env.PAGER = "most"
 $env.GROFF_NO_SGR = 1
+$env.NUM_CORES = sys cpu | length

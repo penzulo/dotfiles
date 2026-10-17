@@ -1,0 +1,295 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Helix languages.toml (unofficial)",
+  "description": "Rough, community-derived schema for Helix's languages.toml. Not an official Helix artifact — built from the language-configuration docs, may drift from actual behavior as Helix evolves.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "use-grammars": {
+      "description": "Controls which grammars 'hx --grammar fetch/build' processes. Must appear before [[language]]/[[grammar]] sections in the file.",
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "only": { "type": "array", "items": { "type": "string" } }
+          },
+          "required": ["only"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "except": { "type": "array", "items": { "type": "string" } }
+          },
+          "required": ["except"],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "language": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/language" }
+    },
+    "language-server": {
+      "type": "object",
+      "description": "Map of language-server name to its configuration.",
+      "additionalProperties": { "$ref": "#/definitions/languageServer" }
+    },
+    "grammar": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/grammar" }
+    }
+  },
+  "definitions": {
+    "fileType": {
+      "oneOf": [
+        { "type": "string" },
+        {
+          "type": "object",
+          "properties": {
+            "glob": { "type": "string" }
+          },
+          "required": ["glob"],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "lspFeature": {
+      "type": "string",
+      "enum": [
+        "format",
+        "goto-declaration",
+        "goto-definition",
+        "goto-type-definition",
+        "goto-reference",
+        "goto-implementation",
+        "signature-help",
+        "hover",
+        "document-highlight",
+        "completion",
+        "code-action",
+        "document-links",
+        "workspace-command",
+        "document-symbols",
+        "workspace-symbols",
+        "diagnostics",
+        "pull-diagnostics",
+        "rename-symbol",
+        "inlay-hints",
+        "document-colors",
+        "call-hierarchy"
+      ]
+    },
+    "languageServerRef": {
+      "description": "Entry in a language's language-servers list. A plain string enables all features; the table form scopes which features that server handles.",
+      "oneOf": [
+        { "type": "string" },
+        {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "only-features": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/lspFeature" }
+            },
+            "except-features": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/lspFeature" }
+            }
+          },
+          "required": ["name"],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "blockCommentTokens": {
+      "type": "object",
+      "properties": {
+        "start": { "type": "string" },
+        "end": { "type": "string" }
+      },
+      "required": ["start", "end"],
+      "additionalProperties": false
+    },
+    "language": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the language."
+        },
+        "language-id": {
+          "type": "string",
+          "description": "The language-id sent to LSP servers (see LSP TextDocumentItem spec for valid values)."
+        },
+        "scope": {
+          "type": "string",
+          "description": "TextMate/Linguist-style scope, e.g. 'source.js' or 'text.md'."
+        },
+        "injection-regex": {
+          "type": "string",
+          "description": "Regex tested against a language name to decide tree-sitter injection eligibility."
+        },
+        "file-types": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/fileType" }
+        },
+        "shebangs": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "roots": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Marker files used for LSP working-directory root selection."
+        },
+        "auto-format": { "type": "boolean" },
+        "diagnostic-severity": {
+          "type": "string",
+          "enum": ["error", "warning", "info", "hint"]
+        },
+        "comment-tokens": {
+          "oneOf": [
+            { "type": "string" },
+            { "type": "array", "items": { "type": "string" } }
+          ]
+        },
+        "comment-token": {
+          "type": "string",
+          "description": "Deprecated alias for comment-tokens (single value only)."
+        },
+        "block-comment-tokens": {
+          "oneOf": [
+            { "$ref": "#/definitions/blockCommentTokens" },
+            {
+              "type": "array",
+              "items": { "$ref": "#/definitions/blockCommentTokens" }
+            }
+          ]
+        },
+        "indent": {
+          "type": "object",
+          "properties": {
+            "unit": { "type": "string" },
+            "tab-width": { "type": "integer" }
+          },
+          "required": ["unit", "tab-width"],
+          "additionalProperties": false
+        },
+        "language-servers": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/languageServerRef" }
+        },
+        "grammar": {
+          "type": "string",
+          "description": "Tree-sitter grammar to use; defaults to 'name' if omitted."
+        },
+        "formatter": {
+          "type": "object",
+          "properties": {
+            "command": { "type": "string" },
+            "args": { "type": "array", "items": { "type": "string" } }
+          },
+          "required": ["command"],
+          "additionalProperties": false
+        },
+        "soft-wrap": {
+          "type": "object",
+          "description": "Same shape as [editor].soft-wrap.",
+          "additionalProperties": true
+        },
+        "text-width": { "type": "integer" },
+        "rulers": {
+          "type": "array",
+          "items": { "type": "integer" }
+        },
+        "path-completion": { "type": "boolean" },
+        "word-completion": {
+          "description": "Same shape as [editor].word-completion (boolean or table).",
+          "oneOf": [
+            { "type": "boolean" },
+            { "type": "object", "additionalProperties": true }
+          ]
+        },
+        "workspace-lsp-roots": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Intended for project-local .helix/config.toml overrides."
+        },
+        "persistent-diagnostic-sources": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "rainbow-brackets": { "type": "boolean" },
+        "code-actions-on-save": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "LSP code actions run in order on save, e.g. 'source.organizeImports'."
+        }
+      },
+      "required": ["name"]
+    },
+    "languageServer": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "command": {
+          "type": "string",
+          "description": "Binary name or path; must be resolvable on $PATH."
+        },
+        "args": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "config": {
+          "type": "object",
+          "description": "Sent to the server as initializationOptions/settings. Shape is server-specific.",
+          "additionalProperties": true
+        },
+        "timeout": {
+          "type": "integer",
+          "default": 20,
+          "description": "Max seconds a request to this server may take."
+        },
+        "environment": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "required-root-patterns": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Server only starts if at least one glob matches in the resolved LSP root."
+        }
+      },
+      "required": ["command"]
+    },
+    "grammar": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "source": {
+          "type": "object",
+          "properties": {
+            "git": {
+              "type": "string",
+              "description": "Git remote URL to clone the grammar from."
+            },
+            "rev": {
+              "type": "string",
+              "description": "Commit hash or tag to fetch."
+            },
+            "subpath": {
+              "type": "string",
+              "description": "Subdirectory to build, for repos hosting multiple grammars."
+            }
+          },
+          "required": ["git", "rev"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["name", "source"]
+    }
+  }
+}

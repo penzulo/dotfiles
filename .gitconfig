@@ -28,7 +28,7 @@
     template = ~/.config/git/gitmessage
 
 [alias]
-    s = !"/home/penzulo/.bun/bin/git-status --format json | jq"
+    s = !"/home/penzulo/.bun/bin/git-status --format json"
     co = checkout
     br = branch
     ci = commit
@@ -51,3 +51,7 @@
 # Include your work-specific config only for projects in your work directory
 [includeIf "gitdir:~/Workspace/"]
     path = ~/.config/git/workconfig
+[pack]
+	threads = 0
+[grep]
+	threads = 0

@@ -1,4 +1,4 @@
-theme = "tokyonight"
+theme = "horizon-dark"
 
 [editor]
 line-number = "relative"
@@ -20,13 +20,7 @@ display-inlay-hints = false
 [editor.statusline]
 left = ["mode", "spinner"]
 center = ["file-name"]
-right = [
-  "diagnostics",
-  "selections",
-  "position",
-  "file-encoding",
-  "file-line-ending"
-]
+right = ["diagnostics", "selections", "position", "file-encoding", "file-line-ending"]
 
 [editor.indent-guides]
 render = true
@@ -38,3 +32,4 @@ A-q = ":buffer-close"
 A-w = ":write"
 C-n = ":new"
 C-r = ":config-reload"
+C-l = ":e ~/.config/helix/languages.toml"

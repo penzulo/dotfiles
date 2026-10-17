@@ -27,6 +27,7 @@ $env.config = {
 path add $"($nu.home-dir)/.bun/bin"
 path add $"($nu.home-dir)/.cargo/bin"
 path add $"($nu.home-dir)/.local/bin"
+path add $"($nu.home-dir)/.local/share/gem/ruby/3.4.0/bin"
 path add "/opt/nvim-linux-x86_64/bin"
 
 
